@@ -8,7 +8,8 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splashscreen2"
+        android:background="@drawable/splashscreen"
+        android:contentDescription="@string/desc"
         android:onClick="onTap" >
     </ImageButton>
 
