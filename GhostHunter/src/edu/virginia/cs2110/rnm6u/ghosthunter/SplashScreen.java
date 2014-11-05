@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 public class SplashScreen extends Activity {
-
-	Button button;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
