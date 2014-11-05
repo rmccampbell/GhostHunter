@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 public class SplashScreen extends Activity {
-
-	Button button;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,9 +22,9 @@ public class SplashScreen extends Activity {
 
 	public void onTap(View view) {
 		Intent intent = new Intent(this, MainMenu.class);
-	    startActivity(intent);
-	    // Prevent from going back
-	    finish();
+		startActivity(intent);
+		// Prevent from going back
+		finish();
 	}
 
 }
