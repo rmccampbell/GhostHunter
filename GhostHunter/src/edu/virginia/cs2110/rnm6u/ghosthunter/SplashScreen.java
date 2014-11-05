@@ -22,9 +22,9 @@ public class SplashScreen extends Activity {
 
 	public void onTap(View view) {
 		Intent intent = new Intent(this, MainMenu.class);
-	    startActivity(intent);
-	    // Prevent from going back
-	    finish();
+		startActivity(intent);
+		// Prevent from going back
+		finish();
 	}
 
 }
