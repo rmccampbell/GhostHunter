@@ -1,3 +1,8 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
+<<<<<<< Updated upstream
+=======
+1414962647000 987314 3b20dc871d179ba476082efe543dc1b38db46e30 /Users/logan/Documents/andriodworkspace/GhostHunter/GhostHunter/libs/android-support-v4.jar
+1414957391000 987314 9b6a9a9078af571732159b904ad423b03b7cc786 /Users/logan/Documents/andriodworkspace/appcompat_v7/libs/android-support-v4.jar
+>>>>>>> Stashed changes
