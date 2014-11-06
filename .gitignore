@@ -44,7 +44,7 @@ Temporary Items
 
 
 # Android excludes:
-GhostHunter/gen/
-GhostHunter/bin/
+#GhostHunter/gen/
+#GhostHunter/bin/
+#GhostHunter/project.properties
 GhostHunter/.settings/
-GhostHunter/project.properties
