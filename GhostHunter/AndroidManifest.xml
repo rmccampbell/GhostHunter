@@ -28,6 +28,11 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
-    </application>
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
+        </application>
 
 </manifest>

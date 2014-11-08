@@ -3,6 +3,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,7 +28,7 @@ public class MainMenu extends Activity {
 	}
 	
 	public void settingsButtonPressed(View view) {
-		// settings
+		Log.d("MainMenu", "Settings");
 	}
 
 }
