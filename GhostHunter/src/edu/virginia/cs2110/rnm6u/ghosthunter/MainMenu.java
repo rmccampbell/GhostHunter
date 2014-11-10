@@ -27,8 +27,11 @@ public class MainMenu extends Activity {
 		finish();
 	}
 	
-	public void settingsButtonPressed(View view) {
-		Log.d("MainMenu", "Settings");
+	public void musicButtonPressed(View view) {
+		Log.d("MainMenu", "Music");
 	}
-
+	
+	public void aboutButtonPressed(View view) {
+		Log.d("MainMenu", "About");
+	}
 }
