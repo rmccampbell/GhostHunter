@@ -134,5 +134,5 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 		thread = null;
 	}
-
+	
 }

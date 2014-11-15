@@ -14,6 +14,7 @@
         android:layout_height="100dp"
         android:background="#00000000"
         android:textColor="#FFFFFFFF"
+        android:layout_marginTop="25dp"
         android:onClick="startButtonPressed"
         android:text="@string/start_button"
         android:textSize="30sp" />
@@ -24,8 +25,6 @@
         android:layout_height="100dp"
         android:background="#00000000"
         android:textColor="#FFFFFFFF"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="25dp"
         android:onClick="musicButtonPressed"
         android:text="@string/music_button"
         android:textSize="30sp" />
@@ -36,6 +35,7 @@
         android:layout_height="100dp"
         android:background="#00000000"
         android:textColor="#FFFFFFFF"
+        android:layout_marginBottom="25dp"
         android:onClick="aboutButtonPressed"
         android:text="@string/about_button"
         android:textSize="30sp" />
