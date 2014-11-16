@@ -1,18 +1,21 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-public class GameActivity extends Activity implements OnTouchListener, OnClickListener {
+public class GameActivity extends Activity implements OnTouchListener,
+		OnClickListener {
 
 	GameView game;
+	MediaPlayer musicPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnClickLi
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.game_ui);
+		musicPlayer = MediaPlayer.create(GameActivity.this, R.raw.song2);
+		musicPlayer.start();
 
 		game = new GameView(this);
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.game_layout);
