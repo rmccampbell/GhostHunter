@@ -32,12 +32,14 @@ public class MainMenu extends Activity {
 
 	public void musicButtonPressed(View view) {
 		Button musicButton = (Button) findViewById(R.id.music_button);
-		if (gvObj.getMusicOn()) {
+		if (!gvObj.getMusicOn()) {
 			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
-			gvObj.setMusicOn(false);
+			musicButton.setText("Music On");
+			gvObj.setMusicOn(true);
 		} else {
 			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
-			gvObj.setMusicOn(true);
+			musicButton.setText("Music Off");
+			gvObj.setMusicOn(false);
 		}
 		Log.d("MainMenu", "Music");
 	}

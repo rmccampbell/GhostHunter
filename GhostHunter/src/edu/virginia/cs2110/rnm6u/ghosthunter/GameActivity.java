@@ -15,6 +15,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
 
 	GameView game;
+	GlobalVariable gvObj;
 	MediaPlayer musicPlayer;
 
 	@Override
@@ -26,8 +27,13 @@ public class GameActivity extends Activity implements OnTouchListener,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.game_ui);
+		gvObj = ((GlobalVariable) getApplicationContext());
 		musicPlayer = MediaPlayer.create(GameActivity.this, R.raw.song2);
-		musicPlayer.start();
+		musicPlayer.setLooping(true);
+		
+		if (gvObj.getMusicOn()) {
+			musicPlayer.start();
+		}
 
 		game = new GameView(this);
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.game_layout);
@@ -91,12 +97,16 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	protected void onPause() {
 		super.onPause();
+		musicPlayer.stop();
 		game.pause();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (gvObj.getMusicOn()) {
+			musicPlayer.start();
+		}
 		game.resume();
 	}
 
