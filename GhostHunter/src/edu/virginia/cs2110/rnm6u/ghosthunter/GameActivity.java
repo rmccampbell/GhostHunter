@@ -11,8 +11,9 @@ import android.view.View.OnTouchListener;
 import android.widget.RelativeLayout;
 
 public class GameActivity extends Activity implements OnTouchListener, OnClickListener {
+	private static final String TAG = Entity.class.getSimpleName();
 
-	GameView game;
+	private GameView game;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

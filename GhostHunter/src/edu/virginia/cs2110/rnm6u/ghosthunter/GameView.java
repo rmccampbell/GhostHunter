@@ -1,101 +1,139 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
+	private static final String TAG = GameView.class.getSimpleName();
+
+	public Bitmap NO_ARMOR_NO_WEAPON;
+	public Bitmap NO_ARMOR_SHORT_SWORD;
+	public Bitmap ARMOR_SHORT_SWORD;
+	public Bitmap GOLD_ARMOR_LONGSWORD;
+	public Bitmap SKELETON;
+
+//	public final int WIDTH = 0;
+//	public final int HEIGHT = 0;
 
 	Thread thread = null;
 	SurfaceHolder holder;
 	boolean running = false;
+	private Random rand = new Random();
 
-	int x = 80, y = 80;
-	int xSpeed = 0, ySpeed = 0;
+	private GameMap map;
+	private ArrayList<Entity> entities;
+	private Player player;
 
 	public GameView(Context context) {
 		super(context);
 		holder = getHolder();
 		holder.addCallback(this);
+		loadSprites();
+	}
+
+	private void loadSprites() {
+		BitmapFactory.Options opts = new BitmapFactory.Options();
+//		opts.inSampleSize = 2;
+		Resources res = getResources();
+		NO_ARMOR_NO_WEAPON = BitmapFactory.decodeResource(res, R.drawable.no_armor_no_weapon, opts);
+//		NO_ARMOR_SHORT_SWORD = BitmapFactory.decodeResource(res, R.drawable.no_armor_short_sword, opts);
+//		ARMOR_SHORT_SWORD = BitmapFactory.decodeResource(res, R.drawable.armor_short_sword, opts);
+//		GOLD_ARMOR_LONGSWORD = BitmapFactory.decodeResource(res, R.drawable.gold_armor_longsword, opts);
+//		SKELETON = BitmapFactory.decodeResource(res, R.drawable.skeleton, opts);
 	}
 
 	@Override
 	public void run() {
+		init();
+
 		while (running) {
-			update();
 			Canvas c = holder.lockCanvas();
 			drawGame(c);
 			holder.unlockCanvasAndPost(c);
+
+			update();
+
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void init() {
+		map = new GameMap(this);
+		entities = new ArrayList<Entity>();
+		player = new Player(400, 400, this);
+		entities.add(player);
+		for (int i = 0; i < 1 + rand.nextInt(15); i++) {
+			int x = rand.nextInt(map.getWidth());
+			int y = rand.nextInt(map.getHeight());
+			entities.add(new Skeleton(x, y, this));
 		}
 	}
 
 	private void update() {
-		x += xSpeed;
-		y += ySpeed;
+		for (Entity sprite : entities) {
+			sprite.update();
+		}
+		map.update();
 	}
 
 	public void drawGame(Canvas c) {
 		c.drawRGB(255, 255, 255);
-		Paint p = new Paint();
-		p.setStyle(Style.FILL);
-		p.setColor(Color.LTGRAY);
-		c.drawCircle(x, y, 80, p);
-		p.setStyle(Style.STROKE);
-		p.setStrokeWidth(8);
-		p.setColor(Color.BLUE);
-		c.drawCircle(x, y, 80, p);
+		map.draw(c);
+		for (Entity sprite : entities) {
+			sprite.draw(c);
+		}
 	}
 
 	public void moveUp() {
-		Log.d("GameView", "move up");
-		ySpeed = -8;
+		player.moveUp();
 	}
-	
-	public void moveDown() {
-		Log.d("GameView", "move down");
-		ySpeed = 8;
-	}
-	
-	public void moveLeft() {
-		Log.d("GameView", "move left");
-		xSpeed = -8;
-	}
-	
-	public void moveRight() {
-		Log.d("GameView", "move right");
-		xSpeed = 8;
-	}
-	
-	public void stopUp() {
-		Log.d("GameView", "stop up");
-		ySpeed = 0;
-	}
-	
-	public void stopDown() {
-		Log.d("GameView", "stop down");
-		ySpeed = 0;
-	}
-	
-	public void stopLeft() {
-		Log.d("GameView", "stop left");
-		xSpeed = 0;
-	}
-	
-	public void stopRight() {
-		Log.d("GameView", "stop right");
-		xSpeed = 0;
-	}
-	
-	public void attack() {
-		Log.d("GameView", "attack");
 
+	public void moveDown() {
+		player.moveDown();
 	}
-	
+
+	public void moveLeft() {
+		player.moveLeft();
+	}
+
+	public void moveRight() {
+		player.moveRight();
+	}
+
+	public void stopUp() {
+		player.stopUp();
+	}
+
+	public void stopDown() {
+		player.stopDown();
+	}
+
+	public void stopLeft() {
+		player.stopLeft();
+	}
+
+	public void stopRight() {
+		player.stopRight();
+	}
+
+	public void attack() {
+		player.attack();
+	}
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d("GameView", "surface created");
@@ -133,6 +171,18 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			}
 		}
 		thread = null;
+	}
+
+	public GameMap getMap() {
+		return map;
+	}
+
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 }
