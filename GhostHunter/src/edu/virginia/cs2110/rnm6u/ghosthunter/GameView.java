@@ -1,6 +1,7 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import android.content.Context;
@@ -16,18 +17,14 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	private static final String TAG = GameView.class.getSimpleName();
 
-	public Bitmap NO_ARMOR_NO_WEAPON;
-	public Bitmap NO_ARMOR_SHORT_SWORD;
-	public Bitmap ARMOR_SHORT_SWORD;
-	public Bitmap GOLD_ARMOR_LONGSWORD;
-	public Bitmap SKELETON;
-
 //	public final int WIDTH = 0;
 //	public final int HEIGHT = 0;
 
 	Thread thread = null;
 	SurfaceHolder holder;
 	boolean running = false;
+	BitmapGetter bmGetter;
+
 	private Random rand = new Random();
 
 	private GameMap map;
@@ -38,18 +35,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		super(context);
 		holder = getHolder();
 		holder.addCallback(this);
-		loadSprites();
-	}
-
-	private void loadSprites() {
-		BitmapFactory.Options opts = new BitmapFactory.Options();
-//		opts.inSampleSize = 2;
-		Resources res = getResources();
-		NO_ARMOR_NO_WEAPON = BitmapFactory.decodeResource(res, R.drawable.no_armor_no_weapon, opts);
-//		NO_ARMOR_SHORT_SWORD = BitmapFactory.decodeResource(res, R.drawable.no_armor_short_sword, opts);
-//		ARMOR_SHORT_SWORD = BitmapFactory.decodeResource(res, R.drawable.armor_short_sword, opts);
-//		GOLD_ARMOR_LONGSWORD = BitmapFactory.decodeResource(res, R.drawable.gold_armor_longsword, opts);
-//		SKELETON = BitmapFactory.decodeResource(res, R.drawable.skeleton, opts);
+		bmGetter = new BitmapGetter(getResources());
 	}
 
 	@Override
@@ -79,13 +65,24 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		for (int i = 0; i < 1 + rand.nextInt(15); i++) {
 			int x = rand.nextInt(map.getWidth());
 			int y = rand.nextInt(map.getHeight());
-			entities.add(new Skeleton(x, y, this));
+			Enemy monst;
+			if (rand.nextFloat() > .75) {
+				monst = new Skeleton(x, y, this);
+			} else {
+				monst = new Goblin(x, y, this);
+			}
+			entities.add(monst);
 		}
 	}
 
 	private void update() {
-		for (Entity sprite : entities) {
-			sprite.update();
+		Iterator<Entity> iter = entities.iterator();
+		while (iter.hasNext()) {
+			Entity entity = iter.next();
+			entity.update();
+			if (entity.isDead()) {
+				iter.remove();
+			}
 		}
 		map.update();
 	}
