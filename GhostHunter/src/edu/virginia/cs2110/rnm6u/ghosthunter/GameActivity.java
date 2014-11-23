@@ -3,6 +3,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -75,6 +76,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		findViewById(R.id.button_right).setOnTouchListener(this);
 		findViewById(R.id.button_left).setOnTouchListener(this);
 		findViewById(R.id.button_attack).setOnClickListener(this);
+		findViewById(R.id.pause_button).setOnClickListener(this);
 	}
 
 	@Override
@@ -122,6 +124,10 @@ public class GameActivity extends Activity implements OnTouchListener,
 		case R.id.button_attack:
 			sound.play(whipSound, 1, 1, 1, 0, 1);
 			game.attack();
+			break;
+		case R.id.pause_button:
+			Intent intent = new Intent(this, PauseMenu.class);
+			startActivity(intent);
 			break;
 		}
 	}
