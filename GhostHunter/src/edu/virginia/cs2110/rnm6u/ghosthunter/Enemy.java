@@ -10,6 +10,7 @@ public class Enemy extends Entity {
 	public Enemy(int x, int y, GameView game) {
 		super(x, y, game);
 
+		this.speed = 4;
 		this.setAnim(WALKING);
 		changeDir();
 	}
@@ -17,11 +18,24 @@ public class Enemy extends Entity {
 	@Override
 	public void update() {
 		super.update();
-		if (canAttack()) {
+		if (canAttack() && rand.nextFloat() < .2) {
 			attack();
-		} else if (rand.nextFloat() < 0.05) {
+		} else if (rand.nextFloat() < .05) {
 			changeDir();
 		}
+	}
+
+	@Override
+	public boolean attack() {
+		if (!super.attack()) return false;
+		game.getPlayer().takeDamage(attack);
+		return true;
+	}
+
+	@Override
+	public boolean canAttack() {
+		if (!super.canAttack()) return false;
+		return getAttackRect().intersect(game.getPlayer().getBoundingRect());
 	}
 
 	public void changeDir() {
@@ -29,32 +43,21 @@ public class Enemy extends Entity {
 		switch (direction) {
 		case UP:
 			xSpeed = 0;
-			ySpeed = -6;
+			ySpeed = -speed;
 			break;
 		case DOWN:
 			xSpeed = 0;
-			ySpeed = 6;
+			ySpeed = speed;
 			break;
 		case LEFT:
-			xSpeed = -6;
+			xSpeed = -speed;
 			ySpeed = 0;
 			break;
 		case RIGHT:
-			xSpeed = 6;
+			xSpeed = speed;
 			ySpeed = 0;
 			break;
 		}
-	}
-
-	@Override
-	public void attack() {
-		super.attack();
-		if (dying) return;
-		game.getPlayer().takeDamage(attack);
-	}
-
-	public boolean canAttack() {
-		return false;//rand.nextFloat() < .05;
 	}
 
 }

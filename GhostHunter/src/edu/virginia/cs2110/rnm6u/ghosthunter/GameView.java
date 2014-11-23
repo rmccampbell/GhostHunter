@@ -1,8 +1,12 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,9 +14,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.util.Log;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	private static final String TAG = GameView.class.getSimpleName();
@@ -76,6 +80,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	private void update() {
+		Collections.sort(entities, new Comparator<Entity>() {
+			@Override
+			public int compare(Entity a, Entity b) {
+				return a.getY() - b.getY();
+			}
+		});
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();

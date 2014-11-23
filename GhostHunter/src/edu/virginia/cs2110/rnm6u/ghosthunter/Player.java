@@ -1,5 +1,6 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
+import android.graphics.Rect;
 import android.util.Log;
 
 public class Player extends Entity {
@@ -13,6 +14,8 @@ public class Player extends Entity {
 
 		this.sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
 		setAnim(STANDING);
+		
+		this.speed = 10;
 		this.maxHealth = 100;
 		this.health = 100;
 		this.attack = 5;
@@ -23,33 +26,59 @@ public class Player extends Entity {
 	@Override
 	public void update() {
 		super.update();
-//		Log.d(TAG, "updating: " + x + ", " + y);
+	}
+
+	@Override
+	public boolean attack() {
+//		Log.d("Player", "attack");
+		if (!super.attack()) return false;
+		Rect attRect = getAttackRect();
+		for (Entity entity : game.getEntities()) {
+			if (entity == this) continue;
+			if (entity instanceof Enemy) {
+				if (attRect.intersect(entity.getBoundingRect())) {
+					entity.takeDamage(attack);
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean canAttack() {
+		return super.canAttack() && weapon != null;
+	};
+
+	@Override
+	public void die() {
+		super.die();
+		// respawn?
 	}
 
 	public void moveUp() {
 //		Log.d("Player", "move up");
-		ySpeed = -8;
+		ySpeed = -speed;
 		setDirection(UP);
 		setAnim(WALKING);
 	}
 	
 	public void moveDown() {
 //		Log.d("Player", "move down");
-		ySpeed = 8;
+		ySpeed = speed;
 		setDirection(DOWN);
 		setAnim(WALKING);
 	}
 	
 	public void moveLeft() {
 //		Log.d("Player", "move left");
-		xSpeed = -8;
+		xSpeed = -speed;
 		setDirection(LEFT);
 		setAnim(WALKING);
 	}
 	
 	public void moveRight() {
 //		Log.d("Player", "move right");
-		xSpeed = 8;
+		xSpeed = speed;
 		setDirection(RIGHT);
 		setAnim(WALKING);
 	}
@@ -76,27 +105,6 @@ public class Player extends Entity {
 //		Log.d("Player", "stop right");
 		xSpeed = 0;
 		setAnim(STANDING);
-	}
-
-	@Override
-	public void attack() {
-//		Log.d("Player", "attack");
-		if (dying) return;
-		if (weapon == null) return;
-		super.attack();
-		for (Entity entity : game.getEntities()) {
-			if (entity == this) continue;
-			if (entity instanceof Enemy) {
-				// attack enemy
-				entity.takeDamage(attack);
-			}
-		}
-	}
-	
-	@Override
-	public void die() {
-		super.die();
-		// respawn?
 	}
 
 }
