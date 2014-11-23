@@ -1,5 +1,6 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
+import java.util.ArrayList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.graphics.Rect;
 import android.util.Log;
 
 public class Entity {
+
 	private static final String TAG = Entity.class.getSimpleName();
 
 	public static final int UP = 0;
@@ -46,8 +48,9 @@ public class Entity {
 
 	protected boolean dying;
 	protected boolean dead;
-	
+
 	protected int actionLock = 0;
+	protected ArrayList<Entity> collidingEnts = new ArrayList<Entity>();
 
 	public Entity(int x, int y, GameView game) {
 		this.game = game;
@@ -77,11 +80,13 @@ public class Entity {
 
 	public void draw(Canvas c) {
 		int srcX = ((int) frame) * anim.width;
-		int srcY = anim.spriteOffset + (anim.directional? (direction * anim.height) : 0);
+		int srcY = anim.spriteOffset
+				+ (anim.directional ? (direction * anim.height) : 0);
 		int dstX = x - anim.xOffset * SCALE + game.getMap().getxOffset();
 		int dstY = y - anim.yOffset * SCALE + game.getMap().getyOffset();
 		Rect src = new Rect(srcX, srcY, srcX + anim.width, srcY + anim.height);
-		Rect dst = new Rect(dstX, dstY, dstX + anim.width * SCALE, dstY + anim.height * SCALE);
+		Rect dst = new Rect(dstX, dstY, dstX + anim.width * SCALE, dstY
+				+ anim.height * SCALE);
 		c.drawBitmap(sprite, src, dst, null);
 		Paint p = new Paint();
 		p.setStyle(Style.STROKE);
@@ -107,9 +112,19 @@ public class Entity {
 		return true;
 	}
 
-	public void takeDamage(int damage) {
+//	public void takeDamage(int damage) {
 //		Log.d(TAG, "Taking damage: " + damage);
-		if (dying) return;
+//		if (dying) return;
+		// Paint p = new Paint();
+		// p.setStyle(Style.STROKE);
+		// Rect r = getAttackRect();
+		// r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
+		// c.drawRect(r, p);
+		// Log.d(TAG, "drawing: " + dstX + ", " + dstY);
+//	}
+
+	public void takeDamage(int damage) {
+		// Log.d(TAG, "Taking damage: " + damage);
 		health -= damage;
 		if (health <= 0) {
 			health = 0;
@@ -150,6 +165,15 @@ public class Entity {
 		this.anim = anim;
 		this.frame = 0;
 		this.playOnce = true;
+	}
+
+	public void updateCollides(ArrayList<Entity> entities) {
+		Rect rectThis = new Rect(10, 10, this.x, this.y);
+		for (Entity entity : entities) {
+			Rect rectThat = new Rect(10, 10, this.x, this.y);
+			if (rectThis.intersect(rectThat))
+				collidingEnts.add(entity);
+		}
 	}
 
 	public int getX() {

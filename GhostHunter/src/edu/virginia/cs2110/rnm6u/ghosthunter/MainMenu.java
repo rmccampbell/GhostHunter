@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,7 +15,8 @@ import android.widget.Toast;
 
 public class MainMenu extends Activity {
 
-	GlobalVariable gvObj;
+	GlobalVariable global;
+	Button musicButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class MainMenu extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_menu);
-		gvObj = ((GlobalVariable) getApplicationContext());
+		global = ((GlobalVariable) getApplicationContext());
 	}
 
 	public void startButtonPressed(View view) {
@@ -31,23 +34,32 @@ public class MainMenu extends Activity {
 	}
 
 	public void musicButtonPressed(View view) {
-		Button musicButton = (Button) findViewById(R.id.music_button);
-		if (!gvObj.getMusicOn()) {
-			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
-			musicButton.setText("Music On");
-			gvObj.setMusicOn(true);
-		} else {
+		musicButton = (Button) findViewById(R.id.music_button);
+		if (global.getMusicOn()) {
 			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
 			musicButton.setText("Music Off");
-			gvObj.setMusicOn(false);
+			global.setMusicOn(false);
+		}
+		else if (!global.getMusicOn()) {
+			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
+			musicButton.setText("Music On");
+			global.setMusicOn(true);
 		}
 		Log.d("MainMenu", "Music");
 	}
 
 	public void aboutButtonPressed(View view) {
 		Log.d("MainMenu", "About");
-		Toast toast = Toast.makeText(this, "Hi from Charlottesville :)",
+		final Toast toast = Toast.makeText(this, "Hi from Charlottesville :)",
 				Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 		toast.show();
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				toast.cancel();
+			}
+		}, 750);
 	}
 }
