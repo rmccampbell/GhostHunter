@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -17,8 +16,12 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.util.Log;
+import android.os.Handler;
+import android.view.Gravity;
+import android.widget.Toast;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
+	
 	private static final String TAG = GameView.class.getSimpleName();
 
 //	public final int WIDTH = 0;
@@ -59,7 +62,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			holder.unlockCanvasAndPost(c);
 
 			update();
-
+			
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
@@ -92,6 +95,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
 			entity.update();
+			entity.updateCollides(entities);
 			if (entity.isDead()) {
 				iter.remove();
 			}
@@ -141,6 +145,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void attack() {
 		player.attack();
+		Log.d("GameView", "attack");
 	}
 
 	@Override

@@ -7,8 +7,8 @@ import android.graphics.Rect;
 import android.util.Log;
 
 public class GameMap {
-	private static final String TAG = GameMap.class.getSimpleName();
 
+	private static final String TAG = GameMap.class.getSimpleName();
 	private static final int SCALE = 1;
 
 	private GameView game;
