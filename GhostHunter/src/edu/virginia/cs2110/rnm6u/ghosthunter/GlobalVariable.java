@@ -7,7 +7,7 @@ import android.app.Application;
 
 public class GlobalVariable extends Application {
 
-	private boolean musicOn;
+	private boolean musicOn = true;
 
 	public boolean getMusicOn() {
 		return musicOn;
