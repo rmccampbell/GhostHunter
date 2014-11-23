@@ -35,6 +35,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private ArrayList<Entity> entities;
 	private Player player;
 
+	private Comparator<Entity> compByYPos = new Comparator<Entity>() {
+		@Override
+		public int compare(Entity a, Entity b) {
+			return a.getY() - b.getY();
+		}
+	};
+
 	public GameView(Context context) {
 		super(context);
 		holder = getHolder();
@@ -80,12 +87,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	private void update() {
-		Collections.sort(entities, new Comparator<Entity>() {
-			@Override
-			public int compare(Entity a, Entity b) {
-				return a.getY() - b.getY();
-			}
-		});
+		Collections.sort(entities, compByYPos);
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();

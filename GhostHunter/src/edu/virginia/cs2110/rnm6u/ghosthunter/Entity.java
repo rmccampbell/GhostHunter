@@ -19,7 +19,7 @@ public class Entity {
 	public static final Animation STANDING = new Animation(64*4, 64, 64, 32, 32+8, 1);
 	public static final Animation WALKING = new Animation(64*4, 64, 64, 32, 32+8, 9);
 	public static final Animation BOWDRAWING = new Animation(64*8, 64, 64, 32, 32+8, 13);
-	public static final Animation DYING = new Animation(64*12, 64, 64, 32, 32+8, 6, .5, false);
+	public static final Animation DYING = new Animation(64*12, 64, 64, 32, 32+8, 6, 1, false);
 	public static final Animation ATTACKING = new Animation(64*13, 192, 192, 96, 96+8, 6);
 
 	private static final int SCALE = 2;
@@ -36,18 +36,17 @@ public class Entity {
 	protected Bitmap sprite;
 	protected Animation anim;
 	protected double frame = 0;
-	protected boolean playOnce = false;
 	protected Animation prevAnim = null;
 	protected boolean animLocked = false;
 
-	protected int health, maxHealth;
+	protected int maxHealth, health;
 	protected int attack;
 	protected int attackDist = 64;
 
 	protected boolean dying;
 	protected boolean dead;
 	
-	protected int actionLock = 0;
+	protected int actionTimer = 0;
 
 	public Entity(int x, int y, GameView game) {
 		this.game = game;
@@ -63,16 +62,23 @@ public class Entity {
 		if (frame >= anim.numFrames) {
 			frame = 0;
 			animLocked = false;
-			if (playOnce && prevAnim != null) {
+			if (prevAnim != null) {
 				setAnim(prevAnim);
 				prevAnim = null;
-				playOnce = false;
-			}
-			if (dying) {
-				dead = true;
 			}
 		}
-		if (actionLock > 0) actionLock--;
+
+		if (actionTimer > 0) {
+			actionTimer--;
+			if (actionTimer == 0) {
+				if (dying) {
+					dead = true;
+					actionTimer = -1;
+					Log.d(TAG, this + " dead");
+				}
+			}
+		}
+
 	}
 
 	public void draw(Canvas c) {
@@ -95,20 +101,20 @@ public class Entity {
 
 	public boolean attack() {
 		if (!canAttack()) return false;
-		Log.d(TAG, this + " attacked");
+		Log.d(TAG, this + " attacking");
 		playOnce(ATTACKING);
 		animLocked = true;
-		actionLock = 6;
+		actionTimer = 6;
 		return true;
 	}
 
 	public boolean canAttack() {
-		if (actionLock > 0) return false;
+		if (actionTimer != 0) return false;
 		return true;
 	}
 
 	public void takeDamage(int damage) {
-//		Log.d(TAG, "Taking damage: " + damage);
+//		Log.d(TAG, this + " taking damage: " + damage);
 		if (dying) return;
 		health -= damage;
 		if (health <= 0) {
@@ -120,8 +126,9 @@ public class Entity {
 	public void die() {
 		playOnce(DYING);
 		animLocked = true;
-		actionLock = 6;
+		actionTimer = (int) (DYING.numFrames / DYING.speed);
 		dying = true;
+		Log.d(TAG, this + " dying");
 	}
 
 	public Rect getBoundingRect() {
@@ -149,7 +156,6 @@ public class Entity {
 			this.prevAnim = this.anim;
 		this.anim = anim;
 		this.frame = 0;
-		this.playOnce = true;
 	}
 
 	public int getX() {
@@ -184,12 +190,20 @@ public class Entity {
 		this.ySpeed = ySpeed;
 	}
 
-	public Bitmap getCurrSprite() {
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public Bitmap getSprite() {
 		return sprite;
 	}
 
-	public void setCurrSprite(Bitmap currSprite) {
-		this.sprite = currSprite;
+	public void setSprite(Bitmap sprite) {
+		this.sprite = sprite;
 	}
 
 	public Animation getAnim() {
@@ -200,6 +214,8 @@ public class Entity {
 		if (!animLocked) {
 			this.anim = anim;
 			this.frame = 0;
+		} else {
+			this.prevAnim = anim;
 		}
 	}
 
@@ -208,9 +224,7 @@ public class Entity {
 	}
 
 	public void setDirection(int direction) {
-		if (actionLock == 0) {
-			this.direction = direction;
-		}
+		this.direction = direction;
 	}
 
 	public double getFrame() {
@@ -219,6 +233,14 @@ public class Entity {
 
 	public void setFrame(double frame) {
 		this.frame = frame;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
 	public boolean isDead() {

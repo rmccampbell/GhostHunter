@@ -12,7 +12,8 @@ public class GameMap {
 	private static final int SCALE = 1;
 
 	private GameView game;
-	private Bitmap image;
+	private Bitmap tileSet;
+	private int[][] tiles;
 	private boolean[][] walls;
 	private int width, height;
 	private int xOffset = 0, yOffset = 0;
@@ -21,6 +22,8 @@ public class GameMap {
 		this.game = game;
 		width = game.getWidth();
 		height = game.getHeight();
+		tiles = new int[32][32];
+		walls = new boolean[32][32];
 	}
 
 	public void update() {

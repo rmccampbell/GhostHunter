@@ -2,6 +2,8 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.Random;
 
+import android.util.Log;
+
 public class Enemy extends Entity {
 	private static final String TAG = Enemy.class.getSimpleName();
 
@@ -18,7 +20,7 @@ public class Enemy extends Entity {
 	@Override
 	public void update() {
 		super.update();
-		if (canAttack() && rand.nextFloat() < .2) {
+		if (rand.nextFloat() < .2 && canAttack()) {
 			attack();
 		} else if (rand.nextFloat() < .05) {
 			changeDir();

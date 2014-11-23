@@ -12,15 +12,16 @@ public class Player extends Entity {
 	public Player(int x, int y, GameView game) {
 		super(x, y, game);
 
-		this.sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
+		this.sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
 		setAnim(STANDING);
 		
-		this.speed = 10;
+		this.speed = 12;
 		this.maxHealth = 100;
 		this.health = 100;
 		this.attack = 5;
 		
 		this.weapon = new Item();
+		this.attackDist = 96;
 	}
 
 	@Override
