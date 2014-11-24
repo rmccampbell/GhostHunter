@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Log.d(TAG, "onCreate");
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -134,6 +137,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	@Override
 	protected void onPause() {
+		Log.d(TAG, "onPause");
 		super.onPause();
 		music.pause();
 		game.pause();
@@ -141,6 +145,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	@Override
 	protected void onResume() {
+		Log.d(TAG, "onResume");
 		super.onResume();
 		if (global.getMusicOn()) {
 			music.start();
@@ -150,12 +155,14 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	@Override
 	protected void onStop() {
+		Log.d(TAG, "onStop");
 		super.onStop();
 		music.pause();
 	}
 
 	@Override
 	protected void onRestart() {
+		Log.d(TAG, "onRestart");
 		if (global.getMusicOn()) {
 			music.start();
 		}
