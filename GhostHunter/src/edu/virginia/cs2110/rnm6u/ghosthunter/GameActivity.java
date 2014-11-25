@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,8 +20,7 @@ import android.widget.RelativeLayout;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
-
-	private static final String TAG = Entity.class.getSimpleName();
+	private static final String TAG = GameActivity.class.getSimpleName();
 
 	private GameView game;
 	private GlobalVariable global;
@@ -44,19 +44,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 		// MUSIC
 		global = ((GlobalVariable) getApplicationContext());
 		Random randy = new Random();
-		int songNumber = 1 + randy.nextInt(5);
+		int songNumber = 1 + randy.nextInt(4);
 		switch (songNumber) {
 		case 1:
-			music = MediaPlayer.create(GameActivity.this, R.raw.song1);
+			music = MediaPlayer.create(this, R.raw.song1);
 			break;
 		case 2:
-			music = MediaPlayer.create(GameActivity.this, R.raw.song2);
+			music = MediaPlayer.create(this, R.raw.song2);
 			break;
 		case 3:
-			music = MediaPlayer.create(GameActivity.this, R.raw.song3);
+			music = MediaPlayer.create(this, R.raw.song3);
 			break;
 		case 4:
-			music = MediaPlayer.create(GameActivity.this, R.raw.song4);
+			music = MediaPlayer.create(this, R.raw.song4);
 			break;
 		}
 		music.setLooping(true);
@@ -66,9 +66,16 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 		// SOUND Fx
 		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		chimeSound = sound.load(this, R.raw.chime, 1);
+//		chimeSound = sound.load(this, R.raw.chime, 1);
 		whipSound = sound.load(this, R.raw.whip, 1);
-		sound.play(chimeSound, 1, 1, 1, 0, 1);
+//		sound.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+//			@Override
+//			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+//				if (sampleId == chimeSound) {
+//					sound.play(chimeSound, 1, 1, 1, 0, 1);
+//				}
+//			}
+//		});
 
 		game = new GameView(this);
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.game_layout);
@@ -129,9 +136,10 @@ public class GameActivity extends Activity implements OnTouchListener,
 			game.attack();
 			break;
 		case R.id.pause_button:
-			Intent intent = new Intent(this, PauseMenu.class);
-			startActivity(intent);
-			break;
+			game.pause();
+//			Intent intent = new Intent(this, PauseMenu.class);
+//			startActivity(intent);
+//			break;
 		}
 	}
 
@@ -163,9 +171,15 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	protected void onRestart() {
 		Log.d(TAG, "onRestart");
+		super.onRestart();
 		if (global.getMusicOn()) {
 			music.start();
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		Log.d(TAG, "onDestroy");
+		super.onDestroy();
+	}
 }

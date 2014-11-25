@@ -11,6 +11,8 @@ import android.view.WindowManager;
 
 public class SplashScreen extends Activity {
 
+	private boolean started = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +25,8 @@ public class SplashScreen extends Activity {
 	}
 
 	public void onTap(View view) {
+		if (started) return;
+		started = true;
 		final Intent menuIntent = new Intent(this, MainMenu.class);
 		final MediaPlayer chime = MediaPlayer.create(SplashScreen.this, R.raw.chime);
 		chime.start();
@@ -34,7 +38,7 @@ public class SplashScreen extends Activity {
 				startActivity(menuIntent);
 				finish();
 			}
-		}, 900);
+		}, 1000);
 	}
 
 }

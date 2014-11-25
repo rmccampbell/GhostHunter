@@ -1,31 +1,19 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
+
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.util.Log;
-import android.os.Handler;
-import android.view.Gravity;
-import android.widget.Toast;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	
 	private static final String TAG = GameView.class.getSimpleName();
-
-//	public final int WIDTH = 0;
-//	public final int HEIGHT = 0;
 
 	Thread thread = null;
 	SurfaceHolder holder;
@@ -37,6 +25,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private GameMap map;
 	private ArrayList<Entity> entities;
 	private Player player;
+	private Entity[][] entityPositions;
 
 	private Comparator<Entity> compByYPos = new Comparator<Entity>() {
 		@Override
@@ -72,30 +61,38 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	private void init() {
-		map = new GameMap(this);
+		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
 		entities = new ArrayList<Entity>();
-		player = new Player(400, 400, this);
+		entityPositions = new Entity[map.getTileWidth()][map.getTileHeight()];
+		player = new Player(352, 352, this);
 		entities.add(player);
 		for (int i = 0; i < 1 + rand.nextInt(15); i++) {
-			int x = rand.nextInt(map.getWidth());
-			int y = rand.nextInt(map.getHeight());
+			int x = rand.nextInt(map.getWidth()) / 4 * 4;
+			int y = rand.nextInt(map.getHeight()) / 4 * 4;
+
 			Enemy monst;
-			if (rand.nextFloat() > .75) {
+			float chance = rand.nextFloat();
+			if (chance < .25) {
 				monst = new Skeleton(x, y, this);
 			} else {
 				monst = new Goblin(x, y, this);
 			}
-			entities.add(monst);
+
+			if (monst.isDead()) {
+				i--;
+			} else {
+				entities.add(monst);
+			}
 		}
 	}
 
 	private void update() {
-		Collections.sort(entities, compByYPos);
+//		Collections.sort(entities, compByYPos);
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
 			entity.update();
-			entity.updateCollides(entities);
+			//entity.updateCollides(entities);
 			if (entity.isDead()) {
 				iter.remove();
 			}
@@ -164,9 +161,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d("GameView", "surface destroyed");
-		if (running) {
-			pause();
-		}
+		pause();
 	}
 
 	public void resume() {
@@ -175,16 +170,18 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void pause() {
 		Log.d("GameView", "paused");
-		running = false;
-		while (true) {
-			try {
-				thread.join();
-				break;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		if (running && thread != null) {
+			running = false;
+			while (true) {
+				try {
+					thread.join();
+					break;
+				} catch (InterruptedException e) {
+					Log.e(TAG, "Thread interrupted", e);
+				}
 			}
+			thread = null;
 		}
-		thread = null;
 	}
 
 	public GameMap getMap() {
@@ -197,6 +194,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public Entity[][] getEntityPositions() {
+		return entityPositions;
 	}
 
 }

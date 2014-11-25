@@ -15,7 +15,7 @@ public class Player extends Entity {
 		this.sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
 		setAnim(STANDING);
 		
-		this.speed = 12;
+		this.speed = 16;
 		this.maxHealth = 100;
 		this.health = 100;
 		this.attack = 5;
