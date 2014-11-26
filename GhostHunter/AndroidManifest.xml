@@ -33,9 +33,11 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
-        android:icon="@drawable/icon"
-	    android:label="@string/app_name"
-	    android:name="GlobalVariable">
+        <activity
+            android:name=".PauseMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
 	</application>
 
 </manifest>

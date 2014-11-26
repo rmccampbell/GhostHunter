@@ -14,13 +14,15 @@ public class Enemy extends Entity {
 
 		this.speed = 4;
 		this.setAnim(WALKING);
-		changeDir();
+		this.changeDir();
+
+		this.atkCooldown = 8;
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		if (rand.nextFloat() < .2 && canAttack()) {
+		if (canAttack()) {
 			attack();
 		} else if (rand.nextFloat() < .05) {
 			changeDir();

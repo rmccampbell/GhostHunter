@@ -38,7 +38,7 @@ public class SplashScreen extends Activity {
 				startActivity(menuIntent);
 				finish();
 			}
-		}, 1000);
+		}, 900);
 	}
 
 }

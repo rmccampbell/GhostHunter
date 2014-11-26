@@ -1,6 +1,5 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
-import java.util.ArrayList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -44,12 +43,13 @@ public class Entity {
 	protected int maxHealth, health;
 	protected int attack;
 	protected int attackDist = 64;
+	protected int atkCooldown = 6;
 
 	protected boolean dying;
 	protected boolean dead;
 	
 	protected int actionTimer = 0;
-	protected ArrayList<Entity> collidingEnts = new ArrayList<Entity>();
+//	protected ArrayList<Entity> collidingEnts = new ArrayList<Entity>();
 
 	public Entity(int x, int y, GameView game) {
 		this.game = game;
@@ -58,48 +58,19 @@ public class Entity {
 		this.y = y;
 
 		if (hasCollision()) {
-			dead = true;
-			return;
-		}
-
-		int tsize = GameMap.TILESIZE;
-		Rect r = getBoundingRect();
-		Entity[][] positions = game.getEntityPositions();
-		for (int tx = r.left / tsize; tx <= (r.right-1) / tsize; tx++) {
-			for (int ty = r.top / tsize; ty <= (r.bottom-1) / tsize; ty++) {
-				positions[tx][ty] = this;
-			}			
+			despawn();
 		}
 	}
 
 	public void update() {
 		int prevX = x;
 		int prevY = y;
-		Rect r = getBoundingRect();
-
 		x += xSpeed;
 		y += ySpeed;
 
 		if (hasCollision()) {
 			x = prevX;
 			y = prevY;
-		} 
-
-		if (x != prevX || y != prevY) {
-			int tsize = GameMap.TILESIZE;
-			Entity[][] positions = game.getEntityPositions();
-			for (int tx = r.left / tsize; tx <= (r.right-1) / tsize; tx++) {
-				for (int ty = r.top / tsize; ty <= (r.bottom-1) / tsize; ty++) {
-					positions[tx][ty] = null;
-				}			
-			}
-
-			Rect newr = getBoundingRect();
-			for (int tx = newr.left / tsize; tx <= (newr.right-1) / tsize; tx++) {
-				for (int ty = newr.top / tsize; ty <= (newr.bottom-1) / tsize; ty++) {
-					positions[tx][ty] = this;
-				}			
-			}
 		}
 
 		frame += anim.speed;
@@ -120,7 +91,6 @@ public class Entity {
 				}
 			}
 		}
-
 	}
 
 	public void draw(Canvas c) {
@@ -133,15 +103,16 @@ public class Entity {
 		Rect dst = new Rect(dstX, dstY, 
 				dstX + anim.width * SCALE, dstY + anim.height * SCALE);
 		c.drawBitmap(sprite, src, dst, null);
-		Paint p = new Paint();
-		p.setStyle(Style.STROKE);
-		p.setStrokeWidth(2);
-		Rect r = getBoundingRect();
-		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
-		c.drawRect(r, p);
-		r = getAttackRect();
-		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
-		c.drawRect(r, p);
+
+//		Paint p = new Paint();
+//		p.setStyle(Style.STROKE);
+//		p.setStrokeWidth(2);
+//		Rect r = getBoundingRect();
+//		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
+//		c.drawRect(r, p);
+//		r = getAttackRect();
+//		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
+//		c.drawRect(r, p);
 	}
 
 	public boolean hasCollision() {
@@ -149,31 +120,31 @@ public class Entity {
 		if (!game.getMap().getRect().contains(r)) {
 			return true;
 		}
+
 		int tsize = GameMap.TILESIZE;
-		Entity[][] positions = game.getEntityPositions();
 		boolean[][] walls = game.getMap().getWalls();
 		for (int tx = r.left / tsize; tx <= (r.right-1) / tsize; tx++) {
 			for (int ty = r.top / tsize; ty <= (r.bottom-1) / tsize; ty++) {
 				if (walls[tx][ty])
 					return true;
-				Entity e = positions[tx][ty];
-				if (e != null && e != this && e.getBoundingRect().intersect(r))
-					return true;
-			}			
+			}
 		}
+
+		for (Entity e : game.getEntities()) {
+			if (e != this && e.getBoundingRect().intersect(r)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
-//	public boolean collidesWith(Entity e) {
-//		return this.getBoundingRect().intersect(e.getBoundingRect());
-//	}
-
 	public boolean attack() {
 		if (!canAttack()) return false;
-		Log.d(TAG, this + " attacking");
 		playOnce(ATTACKING);
+		game.sound.play(game.attackSound, 1, 1, 1, 0, 1);
 		animLocked = true;
-		actionTimer = 6;
+		actionTimer = atkCooldown;
 		return true;
 	}
 
@@ -183,7 +154,6 @@ public class Entity {
 	}
 
 	public void takeDamage(int damage) {
-//		Log.d(TAG, this + " taking damage: " + damage);
 		if (dying) return;
 		health -= damage;
 		if (health <= 0) {
@@ -197,22 +167,11 @@ public class Entity {
 		animLocked = true;
 		actionTimer = (int) (DYING.numFrames / DYING.speed);
 		dying = true;
-		Log.d(TAG, this + " dying");
 	}
 
 	public void despawn() {
-		Log.d(TAG, this + " dead");
 		dead = true;
 		actionTimer = -1;
-		int tsize = GameMap.TILESIZE;
-		Rect r = getBoundingRect();
-		Entity[][] positions = game.getEntityPositions();
-		for (int tx = r.left / tsize; tx <= (r.right-1) / tsize; tx++) {
-			for (int ty = r.top / tsize; ty <= (r.bottom-1) / tsize; ty++) {
-				if (tx >= 0 && tx < positions.length && ty >= 0 && ty < positions[tx].length)
-					positions[tx][ty] = null;
-			}
-		}
 	}
 
 	public Rect getBoundingRect() {
@@ -242,14 +201,14 @@ public class Entity {
 		this.frame = 0;
 	}
 
-	public void updateCollides(ArrayList<Entity> entities) {
-		Rect rectThis = new Rect(10, 10, this.x, this.y);
-		for (Entity entity : entities) {
-			Rect rectThat = new Rect(10, 10, this.x, this.y);
-			if (rectThis.intersect(rectThat))
-				collidingEnts.add(entity);
-		}
-	}
+//	public void updateCollides(ArrayList<Entity> entities) {
+//		Rect rectThis = new Rect(10, 10, this.x, this.y);
+//		for (Entity entity : entities) {
+//			Rect rectThat = new Rect(10, 10, this.x, this.y);
+//			if (rectThis.intersect(rectThat))
+//				collidingEnts.add(entity);
+//		}
+//	}
 
 	public int getX() {
 		return x;

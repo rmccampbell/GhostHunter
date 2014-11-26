@@ -1,12 +1,15 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -15,17 +18,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	
 	private static final String TAG = GameView.class.getSimpleName();
 
-	Thread thread = null;
-	SurfaceHolder holder;
-	boolean running = false;
-	BitmapGetter bmGetter;
-
+	private Thread thread = null;
+	private SurfaceHolder holder;
+	private boolean running = false;
+	private boolean isInit = false;
 	private Random rand = new Random();
-
-	private GameMap map;
-	private ArrayList<Entity> entities;
-	private Player player;
-	private Entity[][] entityPositions;
 
 	private Comparator<Entity> compByYPos = new Comparator<Entity>() {
 		@Override
@@ -34,16 +31,30 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 	};
 
+	private GameMap map;
+	private ArrayList<Entity> entities;
+	private Player player;
+	
+	public final BitmapGetter bmGetter;
+	public final SoundPool sound;
+
+	public final int attackSound;
+
+	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
 		super(context);
 		holder = getHolder();
 		holder.addCallback(this);
 		bmGetter = new BitmapGetter(getResources());
+		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+		attackSound = sound.load(getContext(), R.raw.whip, 1);
 	}
 
 	@Override
 	public void run() {
-		init();
+		if (!isInit) {
+			init();
+		}
 
 		while (running) {
 			Canvas c = holder.lockCanvas();
@@ -63,10 +74,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private void init() {
 		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
 		entities = new ArrayList<Entity>();
-		entityPositions = new Entity[map.getTileWidth()][map.getTileHeight()];
 		player = new Player(352, 352, this);
 		entities.add(player);
-		for (int i = 0; i < 1 + rand.nextInt(15); i++) {
+		for (int i = 0; i < 5 + rand.nextInt(16); i++) {
 			int x = rand.nextInt(map.getWidth()) / 4 * 4;
 			int y = rand.nextInt(map.getHeight()) / 4 * 4;
 
@@ -84,10 +94,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 				entities.add(monst);
 			}
 		}
+		isInit = true;
 	}
 
 	private void update() {
-//		Collections.sort(entities, compByYPos);
+		Collections.sort(entities, compByYPos);
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
@@ -195,9 +206,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public Player getPlayer() {
 		return player;
 	}
-	
-	public Entity[][] getEntityPositions() {
-		return entityPositions;
+
+	public GameActivity getGameActivity() {
+		return (GameActivity) getContext();
 	}
 
 }

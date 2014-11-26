@@ -13,15 +13,16 @@ public class Player extends Entity {
 		super(x, y, game);
 
 		this.sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
-		setAnim(STANDING);
-		
+		this.setAnim(STANDING);
+
 		this.speed = 16;
 		this.maxHealth = 100;
 		this.health = 100;
 		this.attack = 5;
-		
+
 		this.weapon = new Item();
 		this.attackDist = 96;
+		this.atkCooldown = 6;
 	}
 
 	@Override
@@ -31,7 +32,6 @@ public class Player extends Entity {
 
 	@Override
 	public boolean attack() {
-//		Log.d("Player", "attack");
 		if (!super.attack()) return false;
 		Rect attRect = getAttackRect();
 		for (Entity entity : game.getEntities()) {
@@ -57,53 +57,45 @@ public class Player extends Entity {
 	}
 
 	public void moveUp() {
-//		Log.d("Player", "move up");
 		ySpeed = -speed;
 		setDirection(UP);
 		setAnim(WALKING);
 	}
 	
 	public void moveDown() {
-//		Log.d("Player", "move down");
 		ySpeed = speed;
 		setDirection(DOWN);
 		setAnim(WALKING);
 	}
 	
 	public void moveLeft() {
-//		Log.d("Player", "move left");
 		xSpeed = -speed;
 		setDirection(LEFT);
 		setAnim(WALKING);
 	}
 	
 	public void moveRight() {
-//		Log.d("Player", "move right");
 		xSpeed = speed;
 		setDirection(RIGHT);
 		setAnim(WALKING);
 	}
 	
 	public void stopUp() {
-//		Log.d("Player", "stop up");
 		ySpeed = 0;
 		setAnim(STANDING);
 	}
 	
 	public void stopDown() {
-//		Log.d("Player", "stop down");
 		ySpeed = 0;
 		setAnim(STANDING);
 	}
 	
 	public void stopLeft() {
-//		Log.d("Player", "stop left");
 		xSpeed = 0;
 		setAnim(STANDING);
 	}
 	
 	public void stopRight() {
-//		Log.d("Player", "stop right");
 		xSpeed = 0;
 		setAnim(STANDING);
 	}

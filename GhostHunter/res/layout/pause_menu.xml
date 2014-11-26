@@ -5,26 +5,25 @@
     android:background="#9999ff" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button_resume"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="135dp"
-        android:text="Save and Quit" 
-        android:onClick="saveAndQuit"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="97dp"
+        android:onClick="resume"
+        android:text="Resume" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_save_quit"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_marginRight="46dp"
-        android:layout_toLeftOf="@+id/button1"
-        android:text="Resume" 
-        android:onClick="resume"/>
+        android:layout_below="@+id/button_resume"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:onClick="saveAndQuit"
+        android:text="Save and Quit" />
 
 </RelativeLayout>

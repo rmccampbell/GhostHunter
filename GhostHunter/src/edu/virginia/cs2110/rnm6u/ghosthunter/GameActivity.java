@@ -10,6 +10,7 @@ import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		Log.d(TAG, "onCreate");
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -65,9 +66,9 @@ public class GameActivity extends Activity implements OnTouchListener,
 		}
 
 		// SOUND Fx
-		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+//		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 //		chimeSound = sound.load(this, R.raw.chime, 1);
-		whipSound = sound.load(this, R.raw.whip, 1);
+//		whipSound = sound.load(this, R.raw.whip, 1);
 //		sound.setOnLoadCompleteListener(new OnLoadCompleteListener() {
 //			@Override
 //			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
@@ -132,15 +133,27 @@ public class GameActivity extends Activity implements OnTouchListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button_attack:
-			sound.play(whipSound, 1, 1, 1, 0, 1);
 			game.attack();
 			break;
 		case R.id.pause_button:
-			game.pause();
-//			Intent intent = new Intent(this, PauseMenu.class);
-//			startActivity(intent);
-//			break;
+//			game.pause();
+			openPauseMenu();
+			break;
 		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			openPauseMenu();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	public void openPauseMenu() {
+		Intent intent = new Intent(this, PauseMenu.class);
+		startActivity(intent);
 	}
 
 	@Override
