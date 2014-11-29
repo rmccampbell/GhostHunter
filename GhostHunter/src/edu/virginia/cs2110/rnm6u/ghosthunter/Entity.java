@@ -49,7 +49,6 @@ public class Entity {
 	protected boolean dead;
 	
 	protected int actionTimer = 0;
-//	protected ArrayList<Entity> collidingEnts = new ArrayList<Entity>();
 
 	public Entity(int x, int y, GameView game) {
 		this.game = game;
@@ -104,6 +103,7 @@ public class Entity {
 				dstX + anim.width * SCALE, dstY + anim.height * SCALE);
 		c.drawBitmap(sprite, src, dst, null);
 
+		// Collision Test
 //		Paint p = new Paint();
 //		p.setStyle(Style.STROKE);
 //		p.setStrokeWidth(2);
@@ -164,6 +164,8 @@ public class Entity {
 
 	public void die() {
 		playOnce(DYING);
+		x = 0;
+		y = 0;
 		animLocked = true;
 		actionTimer = (int) (DYING.numFrames / DYING.speed);
 		dying = true;
@@ -200,15 +202,6 @@ public class Entity {
 		this.anim = anim;
 		this.frame = 0;
 	}
-
-//	public void updateCollides(ArrayList<Entity> entities) {
-//		Rect rectThis = new Rect(10, 10, this.x, this.y);
-//		for (Entity entity : entities) {
-//			Rect rectThat = new Rect(10, 10, this.x, this.y);
-//			if (rectThis.intersect(rectThat))
-//				collidingEnts.add(entity);
-//		}
-//	}
 
 	public int getX() {
 		return x;

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -39,6 +40,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final SoundPool sound;
 
 	public final int attackSound;
+	private int savedX;
+	private int savedY;
 
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
@@ -48,6 +51,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		bmGetter = new BitmapGetter(getResources());
 		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		attackSound = sound.load(getContext(), R.raw.whip, 1);
+		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
+		this.savedX = prefs.getInt("X", 352);
+		this.savedY = prefs.getInt("Y", 352);
 	}
 
 	@Override
@@ -74,7 +80,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private void init() {
 		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
 		entities = new ArrayList<Entity>();
-		player = new Player(352, 352, this);
+		player = new Player(savedX, savedY, this);
 		entities.add(player);
 		for (int i = 0; i < 5 + rand.nextInt(16); i++) {
 			int x = rand.nextInt(map.getWidth()) / 4 * 4;
@@ -103,7 +109,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
 			entity.update();
-			//entity.updateCollides(entities);
 			if (entity.isDead()) {
 				iter.remove();
 			}

@@ -3,7 +3,9 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -18,6 +20,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
@@ -28,7 +31,6 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private MediaPlayer music;
 	private SoundPool sound;
 	private int chimeSound;
-	private int whipSound;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -66,17 +68,16 @@ public class GameActivity extends Activity implements OnTouchListener,
 		}
 
 		// SOUND Fx
-//		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-//		chimeSound = sound.load(this, R.raw.chime, 1);
-//		whipSound = sound.load(this, R.raw.whip, 1);
-//		sound.setOnLoadCompleteListener(new OnLoadCompleteListener() {
-//			@Override
-//			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-//				if (sampleId == chimeSound) {
-//					sound.play(chimeSound, 1, 1, 1, 0, 1);
-//				}
-//			}
-//		});
+		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+		chimeSound = sound.load(this, R.raw.chime, 1);
+		sound.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+			@Override
+			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+				if (sampleId == chimeSound) {
+					sound.play(chimeSound, 1, 1, 1, 0, 1);
+				}
+			} 
+		});
 
 		game = new GameView(this);
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.game_layout);
@@ -136,7 +137,6 @@ public class GameActivity extends Activity implements OnTouchListener,
 			game.attack();
 			break;
 		case R.id.pause_button:
-//			game.pause();
 			openPauseMenu();
 			break;
 		}
@@ -153,6 +153,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	public void openPauseMenu() {
 		Intent intent = new Intent(this, PauseMenu.class);
+		intent.putExtra("X", game.getPlayer().getX());
+		intent.putExtra("Y", game.getPlayer().getY());
 		startActivity(intent);
 	}
 
