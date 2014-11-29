@@ -53,11 +53,12 @@ public class GameMap {
 //		p.setARGB(255, 0, 0, 255);
 //		p.setStyle(Style.STROKE);
 //		p.setStrokeWidth(5);
+		int tilesPerRow = tileSet.getWidth() / SRC_TILESIZE;
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
 				int tile = tiles[x][y];
-				int srcX = tile % 12 * SRC_TILESIZE;
-				int srcY = tile / 12 * SRC_TILESIZE;
+				int srcX = tile % tilesPerRow * SRC_TILESIZE;
+				int srcY = tile / tilesPerRow * SRC_TILESIZE;
 				Rect srcRect = new Rect(srcX, srcY, srcX + SRC_TILESIZE, srcY + SRC_TILESIZE);
 				int dstX = x * TILESIZE + xOffset;
 				int dstY = y * TILESIZE + yOffset;

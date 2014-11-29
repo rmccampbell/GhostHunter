@@ -19,6 +19,15 @@ public class PauseMenu extends Activity {
 		setContentView(R.layout.pause_menu);
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK) {
+//			saveAndQuit(null);
+//			return true;
+//		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	public void resume(View v) {
 		finish();
 	}

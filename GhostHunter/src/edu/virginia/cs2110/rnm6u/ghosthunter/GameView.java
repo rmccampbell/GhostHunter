@@ -159,9 +159,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.d("GameView", "surface created");
-		running = true;
-		thread = new Thread(this);
-		thread.start();
+		resume();
 	}
 
 	@Override
@@ -177,6 +175,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void resume() {
 		Log.d("GameView", "resumed");
+		if (holder.getSurface().isValid()) {
+			running = true;
+			thread = new Thread(this);
+			thread.start();
+		}
 	}
 
 	public void pause() {
