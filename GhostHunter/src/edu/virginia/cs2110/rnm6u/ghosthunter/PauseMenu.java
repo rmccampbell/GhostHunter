@@ -43,9 +43,20 @@ public class PauseMenu extends Activity {
 	public void saveAndQuit(View v) {
 		int x = getIntent().getIntExtra("X", 352);
 		int y = getIntent().getIntExtra("Y", 352);
+		int health = getIntent().getIntExtra("Health", 100);
 		prefs.edit().putInt("X", x)
-					.putInt("Y", y).commit();
+					.putInt("Y", y)
+					.putInt("Health", health).commit();
 
+		Intent intent = new Intent(this, MainMenu.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
+	public void reset(View v) {
+		prefs.edit().putInt("X", 352)
+					.putInt("Y", 352)
+					.putInt("Health", 100).commit();
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

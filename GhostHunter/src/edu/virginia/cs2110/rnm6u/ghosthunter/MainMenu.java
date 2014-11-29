@@ -71,7 +71,7 @@ public class MainMenu extends Activity {
 	public void aboutButtonPressed(View view) {
 		Log.d("MainMenu", "About");
 		soundPool.play(chimeSound, 1, 1, 1, 0, 1);
-		final Toast toast = Toast.makeText(this, "Hi from Charlottesville :)",
+		final Toast toast = Toast.makeText(this, "Hi from Charlottesville :P",
 				Toast.LENGTH_SHORT);
 		toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 		toast.show();
