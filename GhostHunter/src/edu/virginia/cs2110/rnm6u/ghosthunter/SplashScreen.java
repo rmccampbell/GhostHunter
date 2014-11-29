@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashScreen extends Activity {
+	private static final String TAG = SplashScreen.class.getSimpleName();
 
 	private boolean started = false;
 

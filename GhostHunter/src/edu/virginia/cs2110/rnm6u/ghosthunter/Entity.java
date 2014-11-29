@@ -164,8 +164,6 @@ public class Entity {
 
 	public void die() {
 		playOnce(DYING);
-		x = 0;
-		y = 0;
 		animLocked = true;
 		actionTimer = (int) (DYING.numFrames / DYING.speed);
 		dying = true;

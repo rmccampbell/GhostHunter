@@ -19,6 +19,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	
 	private static final String TAG = GameView.class.getSimpleName();
 
+	GameActivity activity;
 	private Thread thread = null;
 	private SurfaceHolder holder;
 	private boolean running = false;
@@ -46,6 +47,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
 		super(context);
+		activity = (GameActivity) context;
 		holder = getHolder();
 		holder.addCallback(this);
 		bmGetter = new BitmapGetter(getResources());
@@ -81,10 +83,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, this);
+		if (player.isDead()) {
+			Log.e(TAG, "Player spawned with collision");
+		}
 		entities.add(player);
 		for (int i = 0; i < 5 + rand.nextInt(16); i++) {
-			int x = rand.nextInt(map.getWidth()) / 4 * 4;
-			int y = rand.nextInt(map.getHeight()) / 4 * 4;
+			int x = rand.nextInt(map.getWidth() / 4) * 4;
+			int y = rand.nextInt(map.getHeight() / 4) * 4;
 
 			Enemy monst;
 			float chance = rand.nextFloat();
@@ -216,7 +221,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public GameActivity getGameActivity() {
-		return (GameActivity) getContext();
+		return activity;
 	}
 
 }

@@ -51,9 +51,9 @@ public class Player extends Entity {
 	};
 
 	@Override
-	public void die() {
-		super.die();
-		// respawn?
+	public void despawn() {
+		super.despawn();
+		game.getGameActivity().gameOver();
 	}
 
 	public void moveUp() {

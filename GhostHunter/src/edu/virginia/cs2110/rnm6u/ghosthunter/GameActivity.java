@@ -3,9 +3,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -20,7 +18,6 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
@@ -158,6 +155,11 @@ public class GameActivity extends Activity implements OnTouchListener,
 		startActivity(intent);
 	}
 
+	public void gameOver() {
+		Intent intent = new Intent(this, GameOver.class);
+		startActivity(intent);
+	}
+
 	@Override
 	protected void onPause() {
 		Log.d(TAG, "onPause");
@@ -197,4 +199,5 @@ public class GameActivity extends Activity implements OnTouchListener,
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
 	}
+
 }
