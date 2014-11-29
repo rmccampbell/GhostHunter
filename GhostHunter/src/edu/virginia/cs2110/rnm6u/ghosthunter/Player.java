@@ -20,7 +20,7 @@ public class Player extends Entity {
 		this.health = 100;
 		this.attack = 5;
 
-		this.weapon = new Item();
+		this.weapon = new Item(); 
 		this.attackDist = 96;
 		this.atkCooldown = 6;
 	}
