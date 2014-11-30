@@ -90,7 +90,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private void init() {
 		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
-		mapItems[9][4] = new Weapon(5, R.drawable.weapon_placeholder, this);
+		mapItems[9][4] = new ShortSword(this);
+		mapItems[3][3] = new DragonSpear(this);
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
 		if (player.isDead()) {
