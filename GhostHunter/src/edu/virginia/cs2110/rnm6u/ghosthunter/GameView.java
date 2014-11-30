@@ -14,6 +14,7 @@ import android.media.SoundPool;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	

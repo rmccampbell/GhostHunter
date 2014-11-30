@@ -18,6 +18,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
