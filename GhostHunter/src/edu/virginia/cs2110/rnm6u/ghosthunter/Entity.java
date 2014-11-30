@@ -41,7 +41,8 @@ public class Entity {
 	protected boolean animLocked = false;
 
 	protected int maxHealth, health;
-	protected int attack;
+	protected int attack = 0;
+	protected double defense = 0;
 	protected int attackDist = 64;
 	protected int atkCooldown = 6;
 
@@ -154,6 +155,7 @@ public class Entity {
 	}
 
 	public void takeDamage(int damage) {
+		damage -= damage * defense;
 		if (dying) return;
 		health -= damage;
 		if (health <= 0) {
@@ -172,6 +174,11 @@ public class Entity {
 	public void despawn() {
 		dead = true;
 		actionTimer = -1;
+	}
+
+	public void drop(Item item) {
+		int tsize = GameMap.TILESIZE;
+		game.getMapItems()[x / tsize][y / tsize] = item;
 	}
 
 	public Rect getBoundingRect() {

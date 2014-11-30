@@ -85,6 +85,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		findViewById(R.id.button_right).setOnTouchListener(this);
 		findViewById(R.id.button_left).setOnTouchListener(this);
 		findViewById(R.id.button_attack).setOnClickListener(this);
+		findViewById(R.id.button_action).setOnClickListener(this);
 		findViewById(R.id.pause_button).setOnClickListener(this);
 	}
 
@@ -132,6 +133,9 @@ public class GameActivity extends Activity implements OnTouchListener,
 		switch (v.getId()) {
 		case R.id.button_attack:
 			game.attack();
+			break;
+		case R.id.button_action:
+			game.action();
 			break;
 		case R.id.pause_button:
 			openPauseMenu();

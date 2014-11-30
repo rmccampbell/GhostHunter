@@ -10,6 +10,7 @@ public class Goblin extends Enemy {
 		this.maxHealth = 10;
 		this.health = 10;
 		this.attack = 5;
+		this.attackDist = 64;
 	}
 
 }

@@ -36,6 +36,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private GameMap map;
 	private ArrayList<Entity> entities;
 	private Player player;
+	private Item[][] mapItems;
 	
 	public final BitmapGetter bmGetter;
 	public final SoundPool sound;
@@ -81,6 +82,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	private void init() {
 		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
+		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
+		mapItems[9][4] = new Weapon(5, R.drawable.weapon_placeholder, this);
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, this);
 		if (player.isDead()) {
@@ -163,12 +166,16 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void attack() {
 		player.attack();
-		Log.d("GameView", "attack");
+	}
+
+	public void action() {
+		Log.d(TAG, "Action");
+		player.pickUpItem();
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.d("GameView", "surface created");
+		Log.d(TAG, "surface created");
 		resume();
 	}
 
@@ -179,12 +186,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.d("GameView", "surface destroyed");
+		Log.d(TAG, "surface destroyed");
 		pause();
 	}
 
 	public void resume() {
-		Log.d("GameView", "resumed");
+		Log.d(TAG, "resumed");
 		if (holder.getSurface().isValid()) {
 			running = true;
 			thread = new Thread(this);
@@ -193,7 +200,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public void pause() {
-		Log.d("GameView", "paused");
+		Log.d(TAG, "paused");
 		if (running && thread != null) {
 			running = false;
 			while (true) {
@@ -218,6 +225,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public Item[][] getMapItems() {
+		return mapItems;
 	}
 
 	public GameActivity getGameActivity() {

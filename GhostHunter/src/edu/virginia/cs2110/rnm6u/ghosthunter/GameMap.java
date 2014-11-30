@@ -53,6 +53,7 @@ public class GameMap {
 //		p.setARGB(255, 0, 0, 255);
 //		p.setStyle(Style.STROKE);
 //		p.setStrokeWidth(5);
+		Item[][] items = game.getMapItems();
 		int tilesPerRow = tileSet.getWidth() / SRC_TILESIZE;
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
@@ -64,9 +65,12 @@ public class GameMap {
 				int dstY = y * TILESIZE + yOffset;
 				Rect dstRect = new Rect(dstX, dstY, dstX + TILESIZE, dstY + TILESIZE);
 				c.drawBitmap(tileSet, srcRect,  dstRect, null);
-//				if (tile >= WALL_TILE) {
-//					c.drawRect(dstRect, p);
-//				}
+
+				Item item = items[x][y];
+				if (item != null) {
+					c.drawBitmap(item.image, x * TILESIZE + xOffset, 
+							y * TILESIZE + yOffset, null);
+				}
 			}
 		}
 	}
