@@ -97,7 +97,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			Log.e(TAG, "Player spawned with collision");
 		}
 		entities.add(player);
-				
+
 		for (int i = 0; i < savedMonsters; i++) {
 			int x = rand.nextInt(map.getWidth() / 4) * 4;
 			int y = rand.nextInt(map.getHeight() / 4) * 4;
