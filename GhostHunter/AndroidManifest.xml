@@ -9,10 +9,10 @@
         android:targetSdkVersion="21" />
 
     <application
+        android:name=".GlobalVariable"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name="GlobalVariable"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".SplashScreen"
@@ -20,6 +20,7 @@
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,6 +45,10 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent" >
+        </activity>
+        <activity
+            android:name=".GameWin"
+            android:label="@string/title_activity_game_win" >
         </activity>
     </application>
 

@@ -42,6 +42,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final BitmapGetter bmGetter;
 	public final SoundPool sound;
 	public final int attackSound;
+	public final int actionSound;
 	
 	private int savedX;
 	private int savedY;
@@ -57,6 +58,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		bmGetter = new BitmapGetter(getResources());
 		sound = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		attackSound = sound.load(getContext(), R.raw.whip, 1);
+		actionSound = sound.load(getContext(), R.raw.clicker, 1);
 		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
@@ -131,7 +133,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public void drawGame(Canvas c) {
-		c.drawRGB(255, 255, 255);
+		c.drawRGB(0, 0, 0);
 		map.draw(c);
 		for (Entity sprite : entities) {
 			sprite.draw(c);
@@ -177,6 +179,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public void action() {
 		Log.d(TAG, "Action");
 		player.pickUpItem();
+		sound.play(actionSound, 1, 1, 1, 0, 1);
 	}
 
 	@Override

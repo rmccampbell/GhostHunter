@@ -75,10 +75,12 @@ public class GameMap {
 		}
 		//Kills:
 		Paint p = new Paint();
-		p.setARGB(255, 0, 0, 0);
-		p.setTextSize(50);
+		p.setARGB(255, 255, 255, 255);
+		p.setTextSize(40);
 		String kills = "Kills: " + (11-game.getEntities().size());
-		c.drawText(kills, 1000, 100, p);
+		c.drawText(kills, 1025, 80, p);
+		String health = "HP: " + (game.getPlayer().getHealth()) + "%";
+		c.drawText(health, 1025, 120, p);
 	}
 
 	public int getTileWidth() {
