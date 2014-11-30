@@ -73,6 +73,12 @@ public class GameMap {
 				}
 			}
 		}
+		//Kills:
+		Paint p = new Paint();
+		p.setARGB(255, 0, 0, 0);
+		p.setTextSize(50);
+		String kills = "Kills: " + (11-game.getEntities().size());
+		c.drawText(kills, 1000, 100, p);
 	}
 
 	public int getTileWidth() {

@@ -18,6 +18,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
@@ -156,6 +157,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 		Intent intent = new Intent(this, PauseMenu.class);
 		intent.putExtra("X", game.getPlayer().getX());
 		intent.putExtra("Y", game.getPlayer().getY());
+		intent.putExtra("Health", game.getPlayer().getHealth());
+		intent.putExtra("Monsters", (game.getEntities().size() - 1));
 		startActivity(intent);
 	}
 

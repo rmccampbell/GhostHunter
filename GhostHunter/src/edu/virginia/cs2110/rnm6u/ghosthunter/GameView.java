@@ -14,6 +14,7 @@ import android.media.SoundPool;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	
@@ -40,10 +41,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	
 	public final BitmapGetter bmGetter;
 	public final SoundPool sound;
-
 	public final int attackSound;
+	
 	private int savedX;
 	private int savedY;
+	private int savedHealth;
+	private int savedMonsters;
 
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
@@ -57,6 +60,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
+		this.savedHealth = prefs.getInt("Health", 100);
+		this.savedMonsters = prefs.getInt("Monsters", 10);
 	}
 
 	@Override
@@ -85,12 +90,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
 		mapItems[9][4] = new Weapon(5, R.drawable.weapon_placeholder, this);
 		entities = new ArrayList<Entity>();
-		player = new Player(savedX, savedY, this);
+		player = new Player(savedX, savedY, savedHealth, this);
 		if (player.isDead()) {
 			Log.e(TAG, "Player spawned with collision");
 		}
 		entities.add(player);
-		for (int i = 0; i < 5 + rand.nextInt(16); i++) {
+				
+		for (int i = 0; i < savedMonsters; i++) {
 			int x = rand.nextInt(map.getWidth() / 4) * 4;
 			int y = rand.nextInt(map.getHeight() / 4) * 4;
 
@@ -233,6 +239,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public GameActivity getGameActivity() {
 		return activity;
+	}
+	
+	public int getSavedMonsters() {
+		return this.savedMonsters;
 	}
 
 }

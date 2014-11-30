@@ -10,7 +10,7 @@ public class Player extends Entity {
 	private Armor armor;
 	private int money;
 
-	public Player(int x, int y, GameView game) {
+	public Player(int x, int y, int health, GameView game) {
 		super(x, y, game);
 
 		this.sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
@@ -18,7 +18,7 @@ public class Player extends Entity {
 
 		this.speed = 16;
 		this.maxHealth = 100;
-		this.health = 100;
+		this.health = health;
 		this.attack = 5;
 		this.money = 0;
 

@@ -69,15 +69,4 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/pause_button_image" />
 
-    <TextView
-        android:id="@+id/kils_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Kills: 0"
-        android:textSize="25sp" />
-
 </RelativeLayout>
