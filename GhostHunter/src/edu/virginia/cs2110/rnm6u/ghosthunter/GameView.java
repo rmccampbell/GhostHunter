@@ -119,7 +119,17 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		player.addMoney(savedMoney);
 		entities.add(player);
 
+		npcs = new ArrayList<NPC>();
+		shopkeeper = new Shopkeeper(37*64 + 32,3*64 + 32, this);
+		entities.add(shopkeeper);
+		npcs.add(shopkeeper);
+
 		enemies = new ArrayList<Enemy>();
+
+		darkKnight = new DarkKnight(29*64+32, 25*64+32, this);
+		entities.add(darkKnight);
+		enemies.add(darkKnight);
+
 		for (int i = 0; i < savedMonsters; i++) {
 			int x = rand.nextInt(map.getWidth() / 4) * 4;
 			int y = rand.nextInt(map.getHeight() / 4) * 4;
@@ -139,15 +149,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 				enemies.add(monst);
 			}
 		}
-
-		darkKnight = new DarkKnight(29*64+32, 25*64+32, this);
-		entities.add(darkKnight);
-		enemies.add(darkKnight);
-
-		npcs = new ArrayList<NPC>();
-		shopkeeper = new Shopkeeper(37*64 + 32,3*64 + 32, this);
-		entities.add(shopkeeper);
-		npcs.add(shopkeeper);
 
 		kills = savedKills;
 		activity.displayKills(kills);
