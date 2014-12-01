@@ -36,6 +36,9 @@ public class Player extends Entity {
 	@Override
 	public boolean attack() {
 		if (!super.attack()) return false;
+		if (weapon instanceof DragonSpear) {
+			playOnce(ATTACKING);
+		}
 		Rect attRect = getAttackRect();
 		for (Entity entity : game.getEntities()) {
 			if (entity == this) continue;
@@ -53,10 +56,25 @@ public class Player extends Entity {
 		return super.canAttack() && weapon != null;
 	};
 
+	public void action() {
+		Rect rect = getActionRect();
+		for (NPC npc : game.getNPCs()) {
+			if (npc.getBoundingRect().intersect(rect)) {
+				npc.interact();
+				return;
+			}
+		}
+		pickUpItem();
+	}
+
 	public void pickUpItem() {
 		int tsize = GameMap.TILESIZE;
 		Item item = game.getMapItems()[x / tsize][y / tsize];
 		game.getMapItems()[x / tsize][y / tsize] = null;
+		recieveItem(item);
+	}
+
+	public void recieveItem(Item item) {
 		if (item instanceof Weapon) {
 			drop(this.weapon);
 			Weapon weapon = (Weapon) item;
@@ -130,7 +148,11 @@ public class Player extends Entity {
 		if (armor == null) {
 			if (weapon == null) {
 				sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
-			} else if (weapon instanceof Weapon) {
+			} else if (weapon instanceof ShortSword) {
+				sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
+			} else if (weapon instanceof LongSword) {
+				sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
+			} else if (weapon instanceof DragonSpear) {
 				sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
 			}
 		} else if (armor instanceof Armor) {
@@ -142,4 +164,7 @@ public class Player extends Entity {
 		}
 	}
 
+	public int getMoney() {
+		return money;
+	}
 }

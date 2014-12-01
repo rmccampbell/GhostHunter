@@ -36,6 +36,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	private GameMap map;
 	private ArrayList<Entity> entities;
+	private ArrayList<Enemy> enemies;
+	private ArrayList<NPC> npcs;
 	private Player player;
 	private Item[][] mapItems;
 	
@@ -92,13 +94,16 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
 		mapItems[9][4] = new ShortSword(this);
 		mapItems[3][3] = new DragonSpear(this);
+
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
 		if (player.isDead()) {
 			Log.e(TAG, "Player spawned with collision");
+			activity.finish();
 		}
 		entities.add(player);
 
+		enemies = new ArrayList<Enemy>();
 		for (int i = 0; i < savedMonsters; i++) {
 			int x = rand.nextInt(map.getWidth() / 4) * 4;
 			int y = rand.nextInt(map.getHeight() / 4) * 4;
@@ -115,8 +120,15 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 				i--;
 			} else {
 				entities.add(monst);
+				enemies.add(monst);
 			}
 		}
+
+		npcs = new ArrayList<NPC>();
+		Shopkeeper shopkeeper = new Shopkeeper(10, 8, this);
+		entities.add(shopkeeper);
+		npcs.add(shopkeeper);
+
 		isInit = true;
 	}
 
@@ -179,7 +191,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void action() {
 		Log.d(TAG, "Action");
-		player.pickUpItem();
+		player.action();
 		sound.play(actionSound, 1, 1, 1, 0, 1);
 	}
 
@@ -231,6 +243,14 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+	
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	
+	public ArrayList<NPC> getNPCs() {
+		return npcs;
 	}
 
 	public Player getPlayer() {

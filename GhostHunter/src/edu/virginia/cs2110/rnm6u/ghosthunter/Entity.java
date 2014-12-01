@@ -22,6 +22,7 @@ public class Entity {
 	public static final Animation BOWDRAWING = new Animation(64*8, 64, 64, 32, 32+16, 13);
 	public static final Animation DYING = new Animation(64*12, 64, 64, 32, 32+16, 6, 1, false);
 	public static final Animation ATTACKING = new Animation(64*13, 192, 192, 96, 96+16, 6);
+	public static final Animation ATTACKING_SPEAR = new Animation(64*13, 192, 192, 96, 96+16, 8);
 
 	private static final int SCALE = 2;
 
@@ -196,6 +197,21 @@ public class Entity {
 			return new Rect(x - attackDist, y - attackDist, x, y + attackDist);
 		case RIGHT:
 			return new Rect(x, y - attackDist, x + attackDist, y + attackDist);
+		default:
+			return null;
+		}
+	}
+
+	public Rect getActionRect() {
+		switch (direction) {
+		case UP:
+			return new Rect(x - 64, y - 64, x + 64, y);
+		case DOWN:
+			return new Rect(x - 64, y, x + 64, y + 64);
+		case LEFT:
+			return new Rect(x - 64, y - 64, x, y + 64);
+		case RIGHT:
+			return new Rect(x, y - 64, x + 64, y + 64);
 		default:
 			return null;
 		}
