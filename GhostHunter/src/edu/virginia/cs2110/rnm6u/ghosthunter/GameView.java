@@ -51,7 +51,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedY;
 	private int savedHealth;
 	private int savedMonsters;
-	private final int INITIAL_MONSTERS = 40;
+	public static final int INITIAL_MONSTERS = 40;
 	private int kills;
 
 	@SuppressWarnings("deprecation")
@@ -226,7 +226,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public void pause() {
-		Log.d(TAG, "paused");
 		if (running && thread !=null) {
 			running = false;
 			while (true) {

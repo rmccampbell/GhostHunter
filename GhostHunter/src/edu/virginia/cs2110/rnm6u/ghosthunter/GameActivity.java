@@ -29,7 +29,6 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private MediaPlayer music;
 	private Handler handler;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
