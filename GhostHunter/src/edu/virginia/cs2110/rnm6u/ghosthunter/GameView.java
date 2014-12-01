@@ -125,7 +125,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 
 		npcs = new ArrayList<NPC>();
-		Shopkeeper shopkeeper = new Shopkeeper(10, 8, this);
+		Shopkeeper shopkeeper = new Shopkeeper(0, 0, this);
 		entities.add(shopkeeper);
 		npcs.add(shopkeeper);
 
@@ -153,6 +153,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 	}
 
+	public void setDialogText(String text) {
+		TextView dialog = (TextView) findViewById(R.id.dialog);
+		dialog.setText(text);
+	}
 	public void moveUp() {
 		player.moveUp();
 	}

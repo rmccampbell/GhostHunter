@@ -11,6 +11,7 @@ public class NPC extends Entity {
 	}
 	
 	public void talk(String text) {
-		
+		game.setDialogText(text);
 	}
+
 }
