@@ -42,7 +42,7 @@ public class PauseMenu extends Activity {
 	public void saveAndQuit(View v) {
 		int x = getIntent().getIntExtra("X", 352);
 		int y = getIntent().getIntExtra("Y", 352);
-		int health = getIntent().getIntExtra("Health", 100);
+		int health = getIntent().getIntExtra("Health", GameView.INITIAL_HEALTH);
 		int money = getIntent().getIntExtra("Money", 0);
 		int kills = getIntent().getIntExtra("Kills", 0);
 		String armor = getIntent().getStringExtra("Armor");
@@ -67,7 +67,7 @@ public class PauseMenu extends Activity {
 	public void reset(View v) {
 		prefs.edit().putInt("X", 352)
 					.putInt("Y", 352)
-					.putInt("Health", 100)
+					.putInt("Health", GameView.INITIAL_HEALTH)
 					.putInt("Monsters", GameView.INITIAL_MONSTERS).commit();
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -77,13 +77,11 @@ public class PauseMenu extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//game.pause();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//game.resume();
 	}
 
 }
