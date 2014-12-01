@@ -47,6 +47,8 @@ public class Enemy extends Entity {
 	public void die() {
 		super.die();
 		game.addKill();
+		Coins enemyCoin = new Coins(50, game);
+		drop(enemyCoin);
 	}
 
 	@Override
