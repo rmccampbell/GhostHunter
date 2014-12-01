@@ -94,7 +94,7 @@ public class Player extends Entity {
 			this.defense = armor.defense;
 			switchSprite();
 		} else if (item instanceof Coins) {
-			this.money += ((Coins) item).amount;
+			this.addMoney(((Coins) item).amount);
 		}
 	}
 
