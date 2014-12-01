@@ -17,7 +17,9 @@ public class DarkKnight extends Boss {
 
 	@Override
 	public void die() {
-		
+		super.die();
+		GoldArmor bestArmor = new GoldArmor(game);
+		drop(bestArmor);
 	}
 	
 	
