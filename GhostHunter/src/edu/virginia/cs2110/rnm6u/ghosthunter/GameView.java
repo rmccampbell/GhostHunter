@@ -140,7 +140,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			}
 		}
 
-		darkKnight = new DarkKnight(128+32, 128+32, this);
+		darkKnight = new DarkKnight(29*64+32, 25*64+32, this);
 		entities.add(darkKnight);
 		enemies.add(darkKnight);
 
