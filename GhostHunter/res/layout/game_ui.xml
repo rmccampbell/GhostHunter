@@ -92,6 +92,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="15dp"
         android:textSize="18sp"
+        android:textColor="#ffffff"
         android:text="50 HP" />
 
     <TextView
@@ -103,7 +104,8 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="45dp"
         android:textSize="18sp"
-        android:text="$ 0" />
+        android:textColor="#ffffff"
+        android:text="$ 100" />
 
     <TextView
         android:id="@+id/kills"
@@ -114,6 +116,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="75dp"
         android:textSize="18sp"
+        android:textColor="#ffffff"
         android:text="0 Kills" />
 
 </RelativeLayout>

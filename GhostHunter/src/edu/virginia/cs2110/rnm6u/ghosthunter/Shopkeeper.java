@@ -13,6 +13,7 @@ public class Shopkeeper extends NPC {
 
 	@Override
 	public void interact() {
+		super.interact();
 		switch (actionCount) {
 		case 0:
 			talk("It's dangerous to go alone!");

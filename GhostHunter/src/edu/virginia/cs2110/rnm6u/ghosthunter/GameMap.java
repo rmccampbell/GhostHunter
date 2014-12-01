@@ -18,7 +18,6 @@ public class GameMap {
 
 	public static final int TILESIZE = SCALE * SRC_TILESIZE;
 
-
 	private GameView game;
 	private Bitmap tileSet;
 	private int[][] tiles;
@@ -74,13 +73,13 @@ public class GameMap {
 			}
 		}
 		//Kills:
-		Paint p = new Paint();
-		p.setARGB(255, 255, 255, 255);
-		p.setTextSize(40);
-		String kills = "Kills: " + (game.getKills()) + "/" + game.getInitialMonsters();
-		c.drawText(kills, 950, 80, p);
-		String health = "HP: " + (game.getPlayer().getHealth()) + "%";
-		c.drawText(health, 950, 120, p);
+//		Paint p = new Paint();
+//		p.setARGB(255, 255, 255, 255);
+//		p.setTextSize(40);
+//		String kills = "Kills: " + (game.getKills()) + "/" + game.getInitialMonsters();
+//		c.drawText(kills, 950, 80, p);
+//		String health = "HP: " + (game.getPlayer().getHealth()) + "%";
+//		c.drawText(health, 950, 120, p);
 	}
 
 	public int getTileWidth() {

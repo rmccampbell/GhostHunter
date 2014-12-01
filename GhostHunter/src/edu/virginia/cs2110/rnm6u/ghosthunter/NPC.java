@@ -10,11 +10,10 @@ public class NPC extends Entity {
 	}
 
 	public void interact() {
-		Log.d(TAG,"Interact");
 	}
-	
+
 	public void talk(String text) {
-		Log.d(TAG,"Talk: " + text);
+//		Log.d(TAG,"Talk: " + text);
 		game.activity.displayDialog(text);
 	}
 

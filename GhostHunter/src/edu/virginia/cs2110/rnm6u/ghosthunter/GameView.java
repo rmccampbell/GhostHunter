@@ -51,7 +51,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedY;
 	private int savedHealth;
 	private int savedMonsters;
-	final private int INITIAL_MONSTERS = 40;
+	private final int INITIAL_MONSTERS = 40;
 	private int kills;
 
 	@SuppressWarnings("deprecation")
@@ -268,15 +268,16 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public int getSavedMonsters() {
 		return this.savedMonsters;
 	}
-	
+
 	public void addKill() {
 		kills++;
+		activity.displayKills(kills);
 	}
-	
+
 	public int getKills() {
 		return kills;
 	}
-	
+
 	public int getInitialMonsters() {
 		return INITIAL_MONSTERS;
 	}

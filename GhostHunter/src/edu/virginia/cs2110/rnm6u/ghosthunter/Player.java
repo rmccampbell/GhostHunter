@@ -40,12 +40,9 @@ public class Player extends Entity {
 			playOnce(ATTACKING);
 		}
 		Rect attRect = getAttackRect();
-		for (Entity entity : game.getEntities()) {
-			if (entity == this) continue;
-			if (entity instanceof Enemy) {
-				if (attRect.intersect(entity.getBoundingRect())) {
-					entity.takeDamage(attack);
-				}
+		for (Enemy enemy : game.getEnemies()) {
+			if (attRect.intersect(enemy.getBoundingRect())) {
+				enemy.takeDamage(attack);
 			}
 		}
 		return true;
@@ -188,7 +185,7 @@ public class Player extends Entity {
 	public int getMoney() {
 		return money;
 	}
-	
+
 	public void addMoney(int amount) {
 		money += amount;
 		game.activity.displayMoney(money);

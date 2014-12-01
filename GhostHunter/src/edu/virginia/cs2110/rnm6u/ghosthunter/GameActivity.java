@@ -157,24 +157,47 @@ public class GameActivity extends Activity implements OnTouchListener,
 		startActivity(intent);
 	}
 
-	public void displayHealth(int health) {
-		TextView view = (TextView) findViewById(R.id.health);
-		view.setText(String.valueOf(health));
+	public void displayHealth(final int health) {
+		Log.d(TAG, "Health: " + health);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				TextView view = (TextView) findViewById(R.id.health);
+				view.setText(health + " HP");
+			}
+		});
 	}
 
-	public void displayMoney(int money) {
-		TextView view = (TextView) findViewById(R.id.money);
-		view.setText(String.valueOf(money));
+	public void displayMoney(final int money) {
+		Log.d(TAG, "Money: " + money);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				TextView view = (TextView) findViewById(R.id.money);
+				view.setText("$ " + money);
+			}
+		});
 	}
 
-	public void displayKills(int kills) {
-		TextView view = (TextView) findViewById(R.id.kills);
-		view.setText(String.valueOf(kills));
+	public void displayKills(final int kills) {
+		Log.d(TAG, "Kills: " + kills);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				TextView view = (TextView) findViewById(R.id.kills);
+				view.setText(kills + " Kills");
+			}
+		});
 	}
 
-	public void displayDialog(String text) {
+	public void displayDialog(final String text) {
 		final TextView dialog = (TextView) findViewById(R.id.dialog);
-		dialog.setText(text);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				dialog.setText(text);
+			}
+		});
 
 		handler.removeCallbacksAndMessages(null);
 		handler.postDelayed(new Runnable() {
