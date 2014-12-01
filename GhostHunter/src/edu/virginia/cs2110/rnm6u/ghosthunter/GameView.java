@@ -50,7 +50,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedY;
 	private int savedHealth;
 	private int savedMonsters;
-	final private int INITIAL_MONSTERS = 100;
+	final private int INITIAL_MONSTERS = 40;
 	private int kills;
 
 	@SuppressWarnings("deprecation")
