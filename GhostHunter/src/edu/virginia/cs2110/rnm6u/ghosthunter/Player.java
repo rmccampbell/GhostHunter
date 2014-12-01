@@ -6,9 +6,9 @@ import android.util.Log;
 public class Player extends Entity {
 	private static final String TAG = Player.class.getSimpleName();
 
-	private Weapon weapon;
-	private Armor armor;
-	private int money;
+	protected Weapon weapon;
+	protected Armor armor;
+	protected int money;
 
 	public Player(int x, int y, int health, GameView game) {
 		super(x, y, game);
@@ -197,5 +197,4 @@ public class Player extends Entity {
 		money -= amount;
 		game.activity.displayMoney(money);
 	}
-
 }

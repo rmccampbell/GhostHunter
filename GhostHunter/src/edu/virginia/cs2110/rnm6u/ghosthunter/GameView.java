@@ -98,6 +98,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems[3][3] = new ShortSword(this);
 		mapItems[3][4] = new LongSword(this);
 		mapItems[3][5] = new DragonSpear(this);
+		mapItems[3][6] = new PlateArmor(this);
+		mapItems[3][8] = new GoldArmor(this);
 
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
