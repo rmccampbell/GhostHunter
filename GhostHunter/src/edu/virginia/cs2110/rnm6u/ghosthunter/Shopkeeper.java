@@ -20,7 +20,7 @@ public class Shopkeeper extends NPC {
 			actionCount++;
 			break;
 		case 1:
-			talk("Do you want to buy this spear? It's only $100.");
+			talk("Do you want to buy the Dragon Spear? It's only $100");
 			actionCount++;
 			break;
 		case 2:
@@ -31,7 +31,7 @@ public class Shopkeeper extends NPC {
 				talk("Thanks for your business!");
 				actionCount++;
 			} else {
-				talk("You don't have enough money! It's $100.");
+				talk("You don't have enough money to buy the Dragon Spear! It's $100.");
 			}
 			break;
 		case 3:
