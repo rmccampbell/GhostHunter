@@ -49,7 +49,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final int attackSound;
 	public final int actionSound;
 
-	public static final int INITIAL_MONSTERS = 30;
+	public static final int INITIAL_MONSTERS = 20;
 	public static final int INITIAL_HEALTH = 200;
 	private int savedX;
 	private int savedY;
