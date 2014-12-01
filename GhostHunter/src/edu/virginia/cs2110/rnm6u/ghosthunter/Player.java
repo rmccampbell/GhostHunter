@@ -164,7 +164,7 @@ public class Player extends Entity {
 		} else if (armor instanceof PlateArmor) {
 			if (weapon == null) {
 				sprite = bmGetter.getBitmap(R.drawable.armor_no_weapon);
-			} else if (weapon instanceof Weapon) {
+			} else if (weapon instanceof ShortSword) {
 				sprite = bmGetter.getBitmap(R.drawable.armor_short_sword);
 			} else if (weapon instanceof LongSword) {
 				sprite = bmGetter.getBitmap(R.drawable.armor_longsword);
@@ -174,7 +174,7 @@ public class Player extends Entity {
 		} else if (armor instanceof GoldArmor) {
 			if (weapon == null) {
 				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
-			} else if (weapon instanceof Weapon) {
+			} else if (weapon instanceof ShortSword) {
 				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
 			} else if (weapon instanceof LongSword) {
 				sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
@@ -197,5 +197,4 @@ public class Player extends Entity {
 		money -= amount;
 		game.activity.displayMoney(money);
 	}
-
 }
