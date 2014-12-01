@@ -25,7 +25,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private static final String TAG = GameActivity.class.getSimpleName();
 
 	private GameView game;
-	SharedPreferences prefs;
+	protected SharedPreferences prefs;
 	private MediaPlayer music;
 	private Handler handler;
 
@@ -246,6 +246,10 @@ public class GameActivity extends Activity implements OnTouchListener,
 	protected void onDestroy() {
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
+	}
+	
+	public SharedPreferences giveMePrefs() {
+		return prefs;
 	}
 
 }

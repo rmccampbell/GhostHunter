@@ -2,6 +2,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.Random;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Enemy extends Entity {
@@ -9,6 +10,7 @@ public class Enemy extends Entity {
 	private static final String TAG = Enemy.class.getSimpleName();
 	private Random rand = new Random();
 	private SharedPreferences prefs;
+	private boolean difficulty;
 
 	public Enemy(int x, int y, GameView game) {
 		super(x, y, game);
@@ -17,6 +19,8 @@ public class Enemy extends Entity {
 		this.setAnim(WALKING);
 		this.changeDirRandom();
 		this.atkCooldown = 8;
+		this.prefs = game.activity.giveMePrefs();
+		this.difficulty = prefs.getBoolean("Difficulty", true);
 	}
 
 	@Override
@@ -28,8 +32,8 @@ public class Enemy extends Entity {
 		if (hasCollision()) {
 			changeDirRandom();
 		}
-		if (canFollow()&&prefs.getBoolean("Difficulty", true)) {
-			changeDirFollow();
+		if (difficulty&&canFollow()) {
+				changeDirFollow();
 		}
 		else if (rand.nextFloat() < .05) {
 			changeDirRandom();

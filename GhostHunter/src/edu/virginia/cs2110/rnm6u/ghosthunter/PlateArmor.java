@@ -4,7 +4,6 @@ public class PlateArmor extends Armor {
 
 	public PlateArmor(GameView game) {
 		super(0.25, R.drawable.plate_armor, game);
-		// TODO Auto-generated constructor stub
 	}
 
 }

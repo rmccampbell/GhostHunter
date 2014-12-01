@@ -106,17 +106,6 @@ public class Entity {
 		Rect dst = new Rect(dstX, dstY, 
 				dstX + anim.width * SCALE, dstY + anim.height * SCALE);
 		c.drawBitmap(sprite, src, dst, null);
-
-		// Collision Test
-//		Paint p = new Paint();
-//		p.setStyle(Style.STROKE);
-//		p.setStrokeWidth(2);
-//		Rect r = getBoundingRect();
-//		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
-//		c.drawRect(r, p);
-//		r = getAttackRect();
-//		r.offset(game.getMap().getxOffset(), game.getMap().getyOffset());
-//		c.drawRect(r, p);
 	}
 
 	public boolean hasCollision() {

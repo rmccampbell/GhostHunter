@@ -1,6 +1,8 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 
 public class Arrow {
 
@@ -16,21 +18,27 @@ public class Arrow {
 	public static final int RIGHT = 3;
 	
 	protected GameView game;
-	protected BitmapGetter bmGetter;
-	protected Bitmap sprite;
+	protected Bitmap image;
 	
 	public Arrow(int x, int y, int direction, GameView game) {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
 		this.game = game;
-		this.bmGetter = game.bmGetter;
+		this.image = game.bmGetter.getBitmap(0);
 	}
 	
 	public void update() {
 		x += speed;
 		y += speed;
 	}
+	
+	public void draw(Canvas c) {
+		c.drawBitmap(image, x + game.getMap().getxOffset(), y + game.getMap().getyOffset(), null);
+	}
+
+	
+	
 
 	
 	

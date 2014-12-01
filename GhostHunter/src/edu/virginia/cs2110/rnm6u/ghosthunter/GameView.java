@@ -46,7 +46,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final SoundPool sound;
 	public final int attackSound;
 	public final int actionSound;
-	
+
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
