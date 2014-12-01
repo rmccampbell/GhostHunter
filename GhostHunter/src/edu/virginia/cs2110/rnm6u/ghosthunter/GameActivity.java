@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnClickListener {
@@ -25,6 +27,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private GameView game;
 	SharedPreferences prefs;
 	private MediaPlayer music;
+	private Handler handler;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -73,6 +76,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 		findViewById(R.id.button_attack).setOnClickListener(this);
 		findViewById(R.id.button_action).setOnClickListener(this);
 		findViewById(R.id.pause_button).setOnClickListener(this);
+
+		handler = new Handler();
 	}
 
 	@Override
@@ -150,6 +155,34 @@ public class GameActivity extends Activity implements OnTouchListener,
 	public void gameOver() {
 		Intent intent = new Intent(this, GameOver.class);
 		startActivity(intent);
+	}
+
+	public void displayHealth(int health) {
+		TextView view = (TextView) findViewById(R.id.health);
+		view.setText(String.valueOf(health));
+	}
+
+	public void displayMoney(int money) {
+		TextView view = (TextView) findViewById(R.id.money);
+		view.setText(String.valueOf(money));
+	}
+
+	public void displayKills(int kills) {
+		TextView view = (TextView) findViewById(R.id.kills);
+		view.setText(String.valueOf(kills));
+	}
+
+	public void displayDialog(String text) {
+		final TextView dialog = (TextView) findViewById(R.id.dialog);
+		dialog.setText(text);
+
+		handler.removeCallbacksAndMessages(null);
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				dialog.setText("");
+			}
+		}, 5000);
 	}
 
 	@Override

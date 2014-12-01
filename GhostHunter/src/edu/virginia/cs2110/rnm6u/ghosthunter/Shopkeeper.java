@@ -1,6 +1,7 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 public class Shopkeeper extends NPC {
+	private static final String TAG = Shopkeeper.class.getSimpleName();
 
 	private int actionCount = 0;
 
@@ -22,15 +23,19 @@ public class Shopkeeper extends NPC {
 			actionCount++;
 			break;
 		case 2:
-			if (game.getPlayer().getMoney() >= 100) {
-				game.getPlayer().recieveItem(new DragonSpear(game));
+			Player player = game.getPlayer();
+			if (player.getMoney() >= 100) {
+				player.subtractMoney(100);
+				player.recieveItem(new DragonSpear(game));
+				talk("Thanks for your business!");
 				actionCount++;
 			} else {
 				talk("You don't have enough money! It's $100.");
 			}
 			break;
-		default:
+		case 3:
 			talk("Thanks for your business!");
+			break;
 		}
 	}
 }

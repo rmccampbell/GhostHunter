@@ -7,8 +7,9 @@ public class Skeleton extends Enemy {
 		super(x, y, game);
 
 		this.sprite = bmGetter.getBitmap(R.drawable.skeleton);
-		this.maxHealth = 10;
-		this.health = 10;
+		this.speed = 8;
+		this.maxHealth = 20;
+		this.health = 20;
 		this.attack = 5;
 		this.attackDist = 64;
 	}

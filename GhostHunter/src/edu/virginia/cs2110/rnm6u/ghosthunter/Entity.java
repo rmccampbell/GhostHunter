@@ -47,6 +47,7 @@ public class Entity {
 	protected int attackDist = 64;
 	protected int atkCooldown = 6;
 	protected int followDist = 6 * 64;
+	protected int actionDist = 64;
 
 	protected boolean dying;
 	protected boolean dead;
@@ -210,13 +211,13 @@ public class Entity {
 	public Rect getActionRect() {
 		switch (direction) {
 		case UP:
-			return new Rect(x - 64, y - 64, x + 64, y);
+			return new Rect(x - actionDist, y - actionDist, x + actionDist, y);
 		case DOWN:
-			return new Rect(x - 64, y, x + 64, y + 64);
+			return new Rect(x - actionDist, y, x + actionDist, y + actionDist);
 		case LEFT:
-			return new Rect(x - 64, y - 64, x, y + 64);
+			return new Rect(x - actionDist, y - actionDist, x, y + actionDist);
 		case RIGHT:
-			return new Rect(x, y - 64, x + 64, y + 64);
+			return new Rect(x, y - actionDist, x + actionDist, y + actionDist);
 		default:
 			return null;
 		}

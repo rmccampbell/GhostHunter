@@ -20,7 +20,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	
 	private static final String TAG = GameView.class.getSimpleName();
 
-	GameActivity activity;
+	public final GameActivity activity;
+
 	private Thread thread = null;
 	private SurfaceHolder holder;
 	private boolean running = false;
@@ -94,11 +95,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private void init() {
 		map = new GameMap(R.raw.map3_main_map, R.drawable.tileset1, this);
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
-		mapItems[9][4] = new ShortSword(this);
-		mapItems[3][3] = new DragonSpear(this);
+		mapItems[3][3] = new ShortSword(this);
+		mapItems[3][4] = new LongSword(this);
+		mapItems[3][5] = new DragonSpear(this);
 
 		entities = new ArrayList<Entity>();
-		player = new Player(savedX, savedY, savedHealth, this);
+		player = new Player(2*64+32, 3*64+32, savedHealth, this);
 		if (player.isDead()) {
 			Log.e(TAG, "Player spawned with collision");
 			activity.finish();
@@ -127,7 +129,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 
 		npcs = new ArrayList<NPC>();
-		Shopkeeper shopkeeper = new Shopkeeper(0, 0, this);
+		Shopkeeper shopkeeper = new Shopkeeper(32, 32, this);
 		entities.add(shopkeeper);
 		npcs.add(shopkeeper);
 
@@ -155,10 +157,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		}
 	}
 
-	public void setDialogText(String text) {
-		TextView dialog = (TextView) findViewById(R.id.dialog);
-		dialog.setText(text);
-	}
 	public void moveUp() {
 		player.moveUp();
 	}
@@ -267,10 +265,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		return mapItems;
 	}
 
-	public GameActivity getGameActivity() {
-		return activity;
-	}
-	
 	public int getSavedMonsters() {
 		return this.savedMonsters;
 	}

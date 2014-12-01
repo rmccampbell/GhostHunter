@@ -9,7 +9,7 @@ public class Goblin extends Enemy {
 		this.sprite = bmGetter.getBitmap(R.drawable.goblin);
 		this.maxHealth = 10;
 		this.health = 10;
-		this.attack = 5;
+		this.attack = 10;
 		this.attackDist = 64;
 	}
 

@@ -20,7 +20,7 @@ public class Player extends Entity {
 		this.maxHealth = 100;
 		this.health = health;
 		this.attack = 5;
-		this.money = 0;
+		this.money = 100;
 
 		this.weapon = null;
 		this.armor = null;
@@ -56,7 +56,14 @@ public class Player extends Entity {
 		return super.canAttack() && weapon != null;
 	};
 
+	@Override
+	public void takeDamage(int damage) {
+		super.takeDamage(damage);
+		game.activity.displayHealth(health);
+	}
+
 	public void action() {
+		Log.d(TAG, "Action");
 		Rect rect = getActionRect();
 		for (NPC npc : game.getNPCs()) {
 			if (npc.getBoundingRect().intersect(rect)) {
@@ -97,7 +104,7 @@ public class Player extends Entity {
 	@Override
 	public void despawn() {
 		super.despawn();
-		game.getGameActivity().gameOver();
+		game.activity.gameOver();
 	}
 
 	public void moveUp() {
@@ -181,4 +188,15 @@ public class Player extends Entity {
 	public int getMoney() {
 		return money;
 	}
+	
+	public void addMoney(int amount) {
+		money += amount;
+		game.activity.displayMoney(money);
+	}
+
+	public void subtractMoney(int amount) {
+		money -= amount;
+		game.activity.displayMoney(money);
+	}
+
 }
