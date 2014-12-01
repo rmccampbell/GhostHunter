@@ -50,6 +50,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedY;
 	private int savedHealth;
 	private int savedMonsters;
+	final private int INITIAL_MONSTERS = 100;
+	private int kills;
 
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
@@ -65,7 +67,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
 		this.savedHealth = prefs.getInt("Health", 100);
-		this.savedMonsters = prefs.getInt("Monsters", 10);
+		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
 	}
 
 	@Override
@@ -137,7 +139,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.update(player);
+			entity.update();
 			if (entity.isDead()) {
 				iter.remove();
 			}
@@ -227,7 +229,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public void pause() {
 		Log.d(TAG, "paused");
-		if (running && thread != null) {
+		if (running && thread !=null) {
 			running = false;
 			while (true) {
 				try {
@@ -272,5 +274,16 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public int getSavedMonsters() {
 		return this.savedMonsters;
 	}
-
+	
+	public void addKill() {
+		kills++;
+	}
+	
+	public int getKills() {
+		return kills;
+	}
+	
+	public int getInitialMonsters() {
+		return INITIAL_MONSTERS;
+	}
 }

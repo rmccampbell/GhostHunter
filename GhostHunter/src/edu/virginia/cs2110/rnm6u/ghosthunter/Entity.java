@@ -64,7 +64,7 @@ public class Entity {
 		}
 	}
 
-	public void update(Player player) {
+	public void update() {
 		int prevX = x;
 		int prevY = y;
 		x += xSpeed;

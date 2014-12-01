@@ -29,8 +29,8 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(Player player) {
-		super.update(player);
+	public void update() {
+		super.update();
 	}
 
 	@Override

@@ -20,8 +20,8 @@ public class Enemy extends Entity {
 	}
 
 	@Override
-	public void update(Player player) {
-		super.update(player);
+	public void update() {
+		super.update();
 		if (canAttack()) {
 			attack();
 		}
@@ -29,7 +29,7 @@ public class Enemy extends Entity {
 			changeDirRandom();
 		}
 		if (canFollow()) {
-			changeDirFollow(player);
+			changeDirFollow();
 		}
 		else if (rand.nextFloat() < .05) {
 			changeDirRandom();
@@ -41,6 +41,12 @@ public class Enemy extends Entity {
 		if (!super.attack()) return false;
 		game.getPlayer().takeDamage(attack);
 		return true;
+	}
+	
+	@Override
+	public void die() {
+		super.die();
+		game.addKill();
 	}
 
 	@Override
@@ -75,32 +81,32 @@ public class Enemy extends Entity {
 		}
 	}
 	
-	public int distanceFromPlayer(char axis, Player player) {
+	public int distanceFromPlayer(char axis) {
 		if (axis == 'x') {
-			return Math.abs(player.getX()-this.x);
+			return Math.abs(game.getPlayer().getX()-this.x);
 		}
 		else if (axis == 'y') {
-			return Math.abs(player.getY()-this.y);
+			return Math.abs(game.getPlayer().getY()-this.y);
 		}
 		return 0;
 	}
 	
-	public void changeDirFollow(Player player) {
+	public void changeDirFollow() {
 		
-		if(this.distanceFromPlayer('y', player) >= this.distanceFromPlayer('x', player)) {
-			if (this.y > player.getY()) {
+		if(this.distanceFromPlayer('y') >= this.distanceFromPlayer('x')) {
+			if (this.y > game.getPlayer().getY()) {
 				this.direction = UP;
 			}
-			else if (this.y < player.getY()) {
+			else if (this.y < game.getPlayer().getY()) {
 				this.direction = DOWN;
 			}
 		}
 		
-		if(this.distanceFromPlayer('x', player) > this.distanceFromPlayer('y', player)) {
-			if (this.x > player.getX()) {
+		if(this.distanceFromPlayer('x') > this.distanceFromPlayer('y')) {
+			if (this.x > game.getPlayer().getX()) {
 				this.direction = LEFT;
 			}
-			else if (this.x < player.getX()) {
+			else if (this.x < game.getPlayer().getX()) {
 				this.direction = RIGHT;
 			}
 		}
