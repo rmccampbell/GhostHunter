@@ -272,6 +272,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		return player;
 	}
 
+	public DarkKnight getDarkKnight() {
+		return darkKnight;
+	}
+
 	public Item[][] getMapItems() {
 		return mapItems;
 	}
@@ -289,7 +293,4 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		return kills;
 	}
 
-	public int getInitialMonsters() {
-		return INITIAL_MONSTERS;
-	}
 }
