@@ -149,6 +149,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		intent.putExtra("Health", game.getPlayer().getHealth());
 		intent.putExtra("Monsters", (game.getEntities().size() - 1));
 		intent.putExtra("Money", game.getPlayer().getMoney());
+		intent.putExtra("Kills", game.getKills());
 		intent.putExtra("Armor", "");
 		intent.putExtra("Weapon", "");
 		startActivity(intent);

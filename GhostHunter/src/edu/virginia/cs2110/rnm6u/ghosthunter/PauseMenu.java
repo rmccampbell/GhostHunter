@@ -45,6 +45,7 @@ public class PauseMenu extends Activity {
 		int health = getIntent().getIntExtra("Health", 100);
 		int monsters = getIntent().getIntExtra("Monsters", GameView.INITIAL_MONSTERS);
 		int money = getIntent().getIntExtra("Money", 0);
+		int kills = getIntent().getIntExtra("Kills", 0);
 		String armor = getIntent().getStringExtra("Armor");
 		String weapon = getIntent().getStringExtra("Weapon");
 		prefs.edit().putInt("X", x)
@@ -52,6 +53,7 @@ public class PauseMenu extends Activity {
 					.putInt("Health", health)
 					.putInt("Monsters", monsters)
 					.putInt("Money", money)
+					.putInt("Kills", kills)
 					.putString("Armor", armor)
 					.putString("Weapon", weapon).commit();
 
