@@ -151,7 +151,7 @@ public class Player extends Entity {
 	}
 
 	public void switchSprite() {
-		sprite = null;
+//		sprite = null;
 		if (armor == null) {
 			if (weapon == null) {
 				sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
