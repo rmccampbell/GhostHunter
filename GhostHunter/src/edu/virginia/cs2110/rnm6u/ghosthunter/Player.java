@@ -18,7 +18,7 @@ public class Player extends Entity {
 
 		this.money = 0;
 		this.speed = 16;
-		this.maxHealth = 200;
+		this.maxHealth = GameView.INITIAL_HEALTH;
 		this.health = health;
 		this.attack = 5;
 		this.weapon = null;
