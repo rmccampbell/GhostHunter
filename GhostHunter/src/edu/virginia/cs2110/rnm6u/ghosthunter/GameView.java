@@ -50,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final int actionSound;
 
 	public static final int INITIAL_MONSTERS = 40;
+	public static final int INITIAL_HEALTH = 200;
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
@@ -71,7 +72,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
-		this.savedHealth = prefs.getInt("Health", 100);
+		this.savedHealth = prefs.getInt("Health", INITIAL_HEALTH);
 		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
 		this.savedDarkKnight = prefs.getBoolean("DarkKnight", true);
 	}
@@ -105,10 +106,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems[3][5] = new DragonSpear(this);
 		mapItems[3][6] = new PlateArmor(this);
 		mapItems[3][8] = new GoldArmor(this);
-
-		
-		
-
+		//mapItems[3][5] = new DragonSpear(this);
 
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
