@@ -68,7 +68,9 @@ public class PauseMenu extends Activity {
 		prefs.edit().putInt("X", 352)
 					.putInt("Y", 352)
 					.putInt("Health", GameView.INITIAL_HEALTH)
-					.putInt("Monsters", GameView.INITIAL_MONSTERS).commit();
+					.putInt("Monsters", GameView.INITIAL_MONSTERS)
+					.putInt("Money", 0)
+					.putInt("Kills", 0).commit();
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
