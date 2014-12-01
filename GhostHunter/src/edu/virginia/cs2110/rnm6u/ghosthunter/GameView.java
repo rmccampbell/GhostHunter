@@ -41,6 +41,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private ArrayList<NPC> npcs;
 	private Player player;
 	private DarkKnight darkKnight;
+	private Shopkeeper shopkeeper;
 	private Item[][] mapItems;
 
 	public final BitmapGetter bmGetter;
@@ -99,11 +100,15 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private void init() {
 		map = new GameMap(R.raw.map3_main_map, R.drawable.tileset1, this);
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
-		mapItems[3][3] = new ShortSword(this);
-		mapItems[3][4] = new LongSword(this);
+		mapItems[3][4] = new ShortSword(this);
+		mapItems[13][36] = new LongSword(this);
 		mapItems[3][5] = new DragonSpear(this);
 		mapItems[3][6] = new PlateArmor(this);
 		mapItems[3][8] = new GoldArmor(this);
+
+		
+		
+
 
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
@@ -139,7 +144,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		enemies.add(darkKnight);
 
 		npcs = new ArrayList<NPC>();
-		Shopkeeper shopkeeper = new Shopkeeper(32, 32, this);
+		shopkeeper = new Shopkeeper(37*64 + 32,3*64 + 32, this);
 		entities.add(shopkeeper);
 		npcs.add(shopkeeper);
 
