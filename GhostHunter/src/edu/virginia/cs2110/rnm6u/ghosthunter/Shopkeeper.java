@@ -7,6 +7,7 @@ public class Shopkeeper extends NPC {
 	public Shopkeeper(int x, int y, GameView game) {
 		super(x, y, game);
 		this.sprite = bmGetter.getBitmap(R.drawable.shopkeeper);
+		setAnim(STANDING);
 	}
 
 	@Override

@@ -46,6 +46,7 @@ public class Entity {
 	protected double defense = 0;
 	protected int attackDist = 64;
 	protected int atkCooldown = 6;
+	protected int followDist = 6 * 64;
 
 	protected boolean dying;
 	protected boolean dead;
@@ -63,7 +64,7 @@ public class Entity {
 		}
 	}
 
-	public void update() {
+	public void update(Player player) {
 		int prevX = x;
 		int prevY = y;
 		x += xSpeed;
@@ -200,6 +201,10 @@ public class Entity {
 		default:
 			return null;
 		}
+	}
+	
+	public Rect getFollowRect() {
+		return new Rect(x - followDist, y - followDist, x + followDist, y + followDist);
 	}
 
 	public Rect getActionRect() {

@@ -137,7 +137,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		Iterator<Entity> iter = entities.iterator();
 		while (iter.hasNext()) {
 			Entity entity = iter.next();
-			entity.update();
+			entity.update(player);
 			if (entity.isDead()) {
 				iter.remove();
 			}

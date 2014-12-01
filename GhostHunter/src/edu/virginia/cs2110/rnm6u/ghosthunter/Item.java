@@ -3,7 +3,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class Item{
+public class Item {
 
 	protected Bitmap image;
 	protected GameView game;
