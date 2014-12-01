@@ -15,10 +15,12 @@ public class Enemy extends Entity {
 	public Enemy(int x, int y, GameView game) {
 		super(x, y, game);
 
-		this.speed = 4;
 		this.setAnim(WALKING);
 		this.changeDirRandom();
-		this.atkCooldown = 8;
+		this.speed = 4;
+		this.attackDist = 64;
+		this.attackCooldown = 8;
+
 		this.prefs = game.activity.giveMePrefs();
 		this.difficulty = prefs.getBoolean("Difficulty", true);
 	}
@@ -32,7 +34,7 @@ public class Enemy extends Entity {
 		if (hasCollision()) {
 			changeDirRandom();
 		}
-		if (difficulty&&canFollow()) {
+		if (difficulty && canFollow()) {
 				changeDirFollow();
 		}
 		else if (rand.nextFloat() < .05) {

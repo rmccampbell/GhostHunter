@@ -40,18 +40,21 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private ArrayList<Enemy> enemies;
 	private ArrayList<NPC> npcs;
 	private Player player;
+	private DarkKnight darkKnight;
 	private Item[][] mapItems;
-	
+
 	public final BitmapGetter bmGetter;
 	public final SoundPool sound;
 	public final int attackSound;
 	public final int actionSound;
 
+	public static final int INITIAL_MONSTERS = 40;
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
 	private int savedMonsters;
-	public static final int INITIAL_MONSTERS = 40;
+	private boolean savedDarkKnight;
+
 	private int kills = 0;
 
 	@SuppressWarnings("deprecation")
@@ -69,6 +72,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		this.savedY = prefs.getInt("Y", 352);
 		this.savedHealth = prefs.getInt("Health", 100);
 		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
+		this.savedDarkKnight = prefs.getBoolean("DarkKnight", true);
 	}
 
 	@Override
@@ -127,6 +131,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 				enemies.add(monst);
 			}
 		}
+
+		darkKnight = new DarkKnight(100, 100, this);
+		entities.add(darkKnight);
+		enemies.add(darkKnight);
 
 		npcs = new ArrayList<NPC>();
 		Shopkeeper shopkeeper = new Shopkeeper(32, 32, this);

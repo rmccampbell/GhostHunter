@@ -7,10 +7,12 @@ public class Goblin extends Enemy {
 		super(x, y, game);
 
 		this.sprite = bmGetter.getBitmap(R.drawable.goblin);
+		this.speed = 4;
 		this.maxHealth = 10;
 		this.health = 10;
 		this.attack = 10;
 		this.attackDist = 64;
+		this.attackCooldown = 8;
 	}
 
 }

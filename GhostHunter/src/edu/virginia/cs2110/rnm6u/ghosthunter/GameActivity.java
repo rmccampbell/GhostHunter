@@ -147,7 +147,14 @@ public class GameActivity extends Activity implements OnTouchListener,
 		intent.putExtra("X", game.getPlayer().getX());
 		intent.putExtra("Y", game.getPlayer().getY());
 		intent.putExtra("Health", game.getPlayer().getHealth());
-		intent.putExtra("Monsters", (game.getEntities().size() - 1));
+		int numMonsters = 0;
+		for (Enemy enemy : game.getEnemies()) {
+			if (!(enemy instanceof Boss)) {
+				numMonsters++;
+			}
+		}
+		intent.putExtra("Monsters", numMonsters);
+		intent.putExtra("DarkKnight", false);
 		startActivity(intent);
 	}
 

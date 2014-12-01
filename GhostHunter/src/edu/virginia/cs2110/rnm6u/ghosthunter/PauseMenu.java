@@ -44,10 +44,12 @@ public class PauseMenu extends Activity {
 		int y = getIntent().getIntExtra("Y", 352);
 		int health = getIntent().getIntExtra("Health", 100);
 		int monsters = getIntent().getIntExtra("Monsters", GameView.INITIAL_MONSTERS);
+		boolean darkKnight = getIntent().getBooleanExtra("DarkKnight", true);
 		prefs.edit().putInt("X", x)
 					.putInt("Y", y)
 					.putInt("Health", health)
-					.putInt("Monsters", monsters).commit();
+					.putInt("Monsters", monsters)
+					.putBoolean("DarkKnight", darkKnight).commit();
 
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

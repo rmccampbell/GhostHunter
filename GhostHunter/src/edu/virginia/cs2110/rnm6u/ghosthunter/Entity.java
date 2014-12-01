@@ -45,7 +45,7 @@ public class Entity {
 	protected int attack = 0;
 	protected double defense = 0;
 	protected int attackDist = 64;
-	protected int atkCooldown = 6;
+	protected int attackCooldown = 6;
 	protected int followDist = 6 * 64;
 	protected int actionDist = 64;
 
@@ -137,7 +137,7 @@ public class Entity {
 		playOnce(ATTACKING);
 		game.sound.play(game.attackSound, 1, 1, 1, 0, 1);
 		animLocked = true;
-		actionTimer = atkCooldown;
+		actionTimer = attackCooldown;
 		return true;
 	}
 

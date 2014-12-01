@@ -12,6 +12,7 @@ public class Skeleton extends Enemy {
 		this.health = 20;
 		this.attack = 5;
 		this.attackDist = 64;
+		this.attackCooldown = 6;
 	}
 
 }

@@ -24,7 +24,7 @@ public class Player extends Entity {
 		this.weapon = null;
 		this.armor = null;
 		this.attackDist = 0;
-		this.atkCooldown = 0;
+		this.attackCooldown = 0;
 		
 		game.activity.displayHealth(health);
 		game.activity.displayMoney(money);
@@ -87,7 +87,7 @@ public class Player extends Entity {
 			this.weapon = weapon;
 			this.attack = weapon.attack;
 			this.attackDist = weapon.attackDist;
-			this.atkCooldown = weapon.cooldown;
+			this.attackCooldown = weapon.cooldown;
 			switchSprite();
 		} else if (item instanceof Armor) {
 			drop(this.armor);
