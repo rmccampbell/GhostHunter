@@ -53,10 +53,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
+	private int savedMoney;
+	private int savedKills;
 	private int savedMonsters;
 	private boolean savedDarkKnight;
 
-	private int kills = 0;
+	private int kills;
 
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
@@ -72,6 +74,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
 		this.savedHealth = prefs.getInt("Health", 100);
+		this.savedMoney = prefs.getInt("Money", 0);
+		this.savedKills = prefs.getInt("Kills", 0);
 		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
 		this.savedDarkKnight = prefs.getBoolean("DarkKnight", true);
 	}
@@ -116,6 +120,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			Log.e(TAG, "Player spawned with collision");
 			activity.finish();
 		}
+		player.addMoney(savedMoney);
 		entities.add(player);
 
 		enemies = new ArrayList<Enemy>();
@@ -148,6 +153,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		entities.add(shopkeeper);
 		npcs.add(shopkeeper);
 
+		kills = savedKills;
 		activity.displayKills(kills);
 
 		isInit = true;
@@ -279,6 +285,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public DarkKnight getDarkKnight() {
 		return darkKnight;
+	}
+
+	public Shopkeeper getShopkeeper() {
+		return shopkeeper;
 	}
 
 	public Item[][] getMapItems() {
