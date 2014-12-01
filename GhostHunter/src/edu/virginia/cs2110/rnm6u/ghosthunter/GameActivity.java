@@ -3,11 +3,10 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -24,7 +23,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private static final String TAG = GameActivity.class.getSimpleName();
 
 	private GameView game;
-	private GlobalVariable global;
+	SharedPreferences prefs;
 	private MediaPlayer music;
 
 	@SuppressWarnings("deprecation")
@@ -38,9 +37,10 @@ public class GameActivity extends Activity implements OnTouchListener,
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.game_ui);
+		
+		prefs = this.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
 
 		// MUSIC
-		global = ((GlobalVariable) getApplicationContext());
 		Random randy = new Random();
 		int songNumber = 1 + randy.nextInt(4);
 		switch (songNumber) {
@@ -58,7 +58,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 			break;
 		}
 		music.setLooping(true);
-		if (global.getMusicOn()) {
+		if (prefs.getBoolean("Music", true)) {
 			music.start();
 		}
 
@@ -164,7 +164,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	protected void onResume() {
 		Log.d(TAG, "onResume");
 		super.onResume();
-		if (global.getMusicOn()) {
+		if (prefs.getBoolean("Music", true)) {
 			music.start();
 		}
 		game.resume();
@@ -181,7 +181,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	protected void onRestart() {
 		Log.d(TAG, "onRestart");
 		super.onRestart();
-		if (global.getMusicOn()) {
+		if (prefs.getBoolean("Music", true)) {
 			music.start();
 		}
 	}

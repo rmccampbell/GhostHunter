@@ -1,7 +1,9 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -17,11 +19,11 @@ import android.widget.Toast;
 
 public class MainMenu extends Activity {
 
-	GlobalVariable global;
 	Button musicButton;
 	SoundPool soundPool;
 	int chimeSound;
 	int clickerSound;
+	SharedPreferences prefs;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -31,13 +33,14 @@ public class MainMenu extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_menu);
-		global = ((GlobalVariable) getApplicationContext());
+		prefs = this.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
+
 		musicButton = (Button) findViewById(R.id.music_button);
-		if (global.getMusicOn()) {
+		if (prefs.getBoolean("Music", true)) {
 			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
 			musicButton.setText("Music On");
 		}
-		else if (!global.getMusicOn()) {
+		else if (!(prefs.getBoolean("Music", true))) {
 			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
 			musicButton.setText("Music Off");
 		}
@@ -55,15 +58,15 @@ public class MainMenu extends Activity {
 
 	public void musicButtonPressed(View view) {
 		soundPool.play(clickerSound, 1, 1, 1, 0, 1);
-		if (global.getMusicOn()) {
+		if (prefs.getBoolean("Music", true)) {
 			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
 			musicButton.setText("Music Off");
-			global.setMusicOn(false);
+			prefs.edit().putBoolean("Music", false).commit();
 		}
-		else if (!global.getMusicOn()) {
+		else if (!(prefs.getBoolean("Music", true))) {
 			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
 			musicButton.setText("Music On");
-			global.setMusicOn(true);
+			prefs.edit().putBoolean("Music", true).commit();
 		}
 		Log.d("MainMenu", "Music");
 	}
