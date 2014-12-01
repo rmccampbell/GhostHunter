@@ -90,7 +90,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	private void init() {
-		map = new GameMap(R.raw.map1, R.drawable.tileset1, this);
+		map = new GameMap(R.raw.map2_main_map, R.drawable.tileset1, this);
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
 		mapItems[9][4] = new ShortSword(this);
 		mapItems[3][3] = new DragonSpear(this);
