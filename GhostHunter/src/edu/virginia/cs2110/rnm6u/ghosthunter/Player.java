@@ -16,16 +16,18 @@ public class Player extends Entity {
 		this.sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
 		this.setAnim(STANDING);
 
+		this.money = 0;
 		this.speed = 16;
 		this.maxHealth = 100;
 		this.health = health;
 		this.attack = 5;
-		this.money = 100;
-
 		this.weapon = null;
 		this.armor = null;
 		this.attackDist = 0;
 		this.atkCooldown = 0;
+		
+		game.activity.displayHealth(health);
+		game.activity.displayMoney(money);
 	}
 
 	@Override

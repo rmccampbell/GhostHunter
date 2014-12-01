@@ -52,7 +52,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedHealth;
 	private int savedMonsters;
 	public static final int INITIAL_MONSTERS = 40;
-	private int kills;
+	private int kills = 0;
 
 	@SuppressWarnings("deprecation")
 	public GameView(Context context) {
@@ -100,7 +100,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems[3][5] = new DragonSpear(this);
 
 		entities = new ArrayList<Entity>();
-		player = new Player(2*64+32, 3*64+32, savedHealth, this);
+		player = new Player(savedX, savedY, savedHealth, this);
 		if (player.isDead()) {
 			Log.e(TAG, "Player spawned with collision");
 			activity.finish();
@@ -132,6 +132,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		Shopkeeper shopkeeper = new Shopkeeper(32, 32, this);
 		entities.add(shopkeeper);
 		npcs.add(shopkeeper);
+
+		activity.displayKills(kills);
 
 		isInit = true;
 	}
