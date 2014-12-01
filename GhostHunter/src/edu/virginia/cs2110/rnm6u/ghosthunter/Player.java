@@ -155,11 +155,25 @@ public class Player extends Entity {
 			} else if (weapon instanceof DragonSpear) {
 				sprite = bmGetter.getBitmap(R.drawable.no_armor_dragon_spear);
 			}
-		} else if (armor instanceof Armor) {
+		} else if (armor instanceof PlateArmor) {
 			if (weapon == null) {
 				sprite = bmGetter.getBitmap(R.drawable.armor_no_weapon);
 			} else if (weapon instanceof Weapon) {
 				sprite = bmGetter.getBitmap(R.drawable.armor_short_sword);
+			} else if (weapon instanceof LongSword) {
+				sprite = bmGetter.getBitmap(R.drawable.armor_longsword);
+			} else if (weapon instanceof DragonSpear) {
+				sprite = bmGetter.getBitmap(R.drawable.armor_dragon_spear);
+			}
+		} else if (armor instanceof GoldArmor) {
+			if (weapon == null) {
+				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
+			} else if (weapon instanceof Weapon) {
+				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
+			} else if (weapon instanceof LongSword) {
+				sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
+			} else if (weapon instanceof DragonSpear) {
+				sprite = bmGetter.getBitmap(R.drawable.gold_armor_dragon_spear);
 			}
 		}
 	}
