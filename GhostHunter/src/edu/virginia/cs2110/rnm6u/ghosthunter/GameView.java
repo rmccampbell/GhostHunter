@@ -126,9 +126,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 		enemies = new ArrayList<Enemy>();
 
-		darkKnight = new DarkKnight(29*64+32, 25*64+32, this);
-		entities.add(darkKnight);
-		enemies.add(darkKnight);
+		if (savedDarkKnight) {
+			darkKnight = new DarkKnight(29*64+32, 25*64+32, this);
+			entities.add(darkKnight);
+			enemies.add(darkKnight);
+		}
 
 		for (int i = 0; i < savedMonsters; i++) {
 			int x = rand.nextInt(map.getWidth() / 4) * 4;
