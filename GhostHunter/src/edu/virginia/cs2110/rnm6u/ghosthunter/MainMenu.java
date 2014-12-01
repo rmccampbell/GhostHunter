@@ -20,6 +20,7 @@ import android.widget.Toast;
 public class MainMenu extends Activity {
 
 	Button musicButton;
+	Button difficultyButton;
 	SoundPool soundPool;
 	int chimeSound;
 	int clickerSound;
@@ -41,9 +42,20 @@ public class MainMenu extends Activity {
 			musicButton.setText("Music On");
 		}
 		else if (!(prefs.getBoolean("Music", true))) {
-			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
+			musicButton.setTextColor(Color.argb(255, 100, 100, 100));
 			musicButton.setText("Music Off");
 		}
+		
+		difficultyButton = (Button) findViewById(R.id.difficulty_button);
+		if (prefs.getBoolean("Difficulty", true)) {
+			difficultyButton.setTextColor(Color.argb(255, 255, 255, 255));
+			difficultyButton.setText("Hard");
+		}
+		else if (!(prefs.getBoolean("Difficulty", true))) {
+			difficultyButton.setTextColor(Color.argb(255, 100, 100, 100));
+			difficultyButton.setText("Easy");
+		}
+		
 		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		chimeSound = soundPool.load(this, R.raw.chime, 1);
 		clickerSound = soundPool.load(this, R.raw.clicker, 1);
@@ -59,7 +71,7 @@ public class MainMenu extends Activity {
 	public void musicButtonPressed(View view) {
 		soundPool.play(clickerSound, 1, 1, 1, 0, 1);
 		if (prefs.getBoolean("Music", true)) {
-			musicButton.setTextColor(Color.argb(255, 0, 0, 0));
+			musicButton.setTextColor(Color.argb(255, 100, 100, 100));
 			musicButton.setText("Music Off");
 			prefs.edit().putBoolean("Music", false).commit();
 		}
@@ -68,7 +80,20 @@ public class MainMenu extends Activity {
 			musicButton.setText("Music On");
 			prefs.edit().putBoolean("Music", true).commit();
 		}
-		Log.d("MainMenu", "Music");
+	}
+	
+	public void difficultyButtonPressed(View view) {
+		if (prefs.getBoolean("Difficulty", true)) {
+			difficultyButton.setTextColor(Color.argb(255, 100, 100, 100));
+			difficultyButton.setText("Easy");
+			prefs.edit().putBoolean("Difficulty", false).commit();
+		}
+		
+		else if (!(prefs.getBoolean("Difficulty", true))) {
+			difficultyButton.setTextColor(Color.argb(255, 255, 255, 255));
+			difficultyButton.setText("Hard");
+			prefs.edit().putBoolean("Difficulty", true).commit();
+		}
 	}
 
 	public void aboutButtonPressed(View view) {

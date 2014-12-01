@@ -2,13 +2,13 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import java.util.Random;
 
-import android.util.Log;
+import android.content.SharedPreferences;
 
 public class Enemy extends Entity {
 	
 	private static final String TAG = Enemy.class.getSimpleName();
-
 	private Random rand = new Random();
+	private SharedPreferences prefs;
 
 	public Enemy(int x, int y, GameView game) {
 		super(x, y, game);
@@ -28,7 +28,7 @@ public class Enemy extends Entity {
 		if (hasCollision()) {
 			changeDirRandom();
 		}
-		if (canFollow()) {
+		if (canFollow()&&prefs.getBoolean("Difficulty", true)) {
 			changeDirFollow();
 		}
 		else if (rand.nextFloat() < .05) {

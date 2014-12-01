@@ -8,6 +8,7 @@
     <string name="start_button">Start</string>
     <string name="music_button">Music On</string>
     <string name="about_button">About</string>
+    <string name="difficulty_button">Easy</string>
     <string name="title_activity_game_win">GameWin</string>
 
 </resources>
