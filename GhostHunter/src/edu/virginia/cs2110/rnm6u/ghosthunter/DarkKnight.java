@@ -15,4 +15,10 @@ public class DarkKnight extends Boss {
 		this.attackCooldown = 10;
 	}
 
+	@Override
+	public void die() {
+		
+	}
+	
+	
 }
