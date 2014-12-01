@@ -49,8 +49,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final int attackSound;
 	public final int actionSound;
 
-	public static final int INITIAL_MONSTERS = 40;
-	public static final int INITIAL_HEALTH = 100;
+	public static final int INITIAL_MONSTERS = 30;
+	public static final int INITIAL_HEALTH = 200;
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
@@ -58,7 +58,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private int savedKills;
 	private int savedMonsters;
 	private boolean savedDarkKnight;
-
 	private int kills;
 
 	@SuppressWarnings("deprecation")
@@ -107,7 +106,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
 		mapItems[3][4] = new ShortSword(this);
 		mapItems[14][38] = new LongSword(this);
-		
 		mapItems[3][6] = new PlateArmor(this);
 		//mapItems[3][8] = new GoldArmor(this);
 		

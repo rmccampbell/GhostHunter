@@ -53,7 +53,7 @@ public class Enemy extends Entity {
 	public void die() {
 		super.die();
 		game.addKill();
-		Coins enemyCoin = new Coins(rand.nextInt(46) + 5, game);
+		Coins enemyCoin = new Coins(rand.nextInt(20) + 5, game);
 		drop(enemyCoin);
 	}
 
