@@ -65,13 +65,7 @@ public class PauseMenu extends Activity {
 	}
 	
 	public void reset(View v) {
-		prefs.edit().putInt("X", 352)
-					.putInt("Y", 352)
-					.putInt("Health", GameView.INITIAL_HEALTH)
-					.putInt("Money", 0)
-					.putInt("Kills", 0)
-					.putInt("Monsters", GameView.INITIAL_MONSTERS)
-					.putBoolean("DarkKnight", true).commit();
+		prefs.edit().clear().commit();
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
