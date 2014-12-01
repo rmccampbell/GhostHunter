@@ -50,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	public final int actionSound;
 
 	public static final int INITIAL_MONSTERS = 40;
+	public static final int INITIAL_HEALTH = 100;
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
@@ -73,7 +74,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
 		this.savedX = prefs.getInt("X", 352);
 		this.savedY = prefs.getInt("Y", 352);
-		this.savedHealth = prefs.getInt("Health", 100);
+		this.savedHealth = prefs.getInt("Health", INITIAL_HEALTH);
 		this.savedMoney = prefs.getInt("Money", 0);
 		this.savedKills = prefs.getInt("Kills", 0);
 		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
@@ -105,14 +106,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		map = new GameMap(R.raw.map3_main_map, R.drawable.tileset1, this);
 		mapItems = new Item[map.getTileWidth()][map.getTileHeight()];
 		mapItems[3][4] = new ShortSword(this);
-		mapItems[13][36] = new LongSword(this);
-		mapItems[3][5] = new DragonSpear(this);
+		mapItems[14][38] = new LongSword(this);
+		
 		mapItems[3][6] = new PlateArmor(this);
-		mapItems[3][8] = new GoldArmor(this);
-
+		//mapItems[3][8] = new GoldArmor(this);
 		
-		
-
 
 		entities = new ArrayList<Entity>();
 		player = new Player(savedX, savedY, savedHealth, this);
