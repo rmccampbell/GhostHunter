@@ -7,7 +7,7 @@ public class Shopkeeper extends NPC {
 
 	public Shopkeeper(int x, int y, GameView game) {
 		super(x, y, game);
-		this.sprite = bmGetter.getBitmap(R.drawable.shopkeeper);
+		this.setSprite(R.drawable.shopkeeper);
 		setAnim(STANDING);
 	}
 
@@ -27,7 +27,7 @@ public class Shopkeeper extends NPC {
 			Player player = game.getPlayer();
 			if (player.getMoney() >= 100) {
 				player.subtractMoney(100);
-				player.recieveItem(new DragonSpear(game));
+				player.receiveItem(new DragonSpear(game));
 				talk("Thanks for your business!");
 				actionCount++;
 			} else {

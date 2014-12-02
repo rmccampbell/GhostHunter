@@ -1,5 +1,6 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,13 +52,19 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public static final int INITIAL_MONSTERS = 20;
 	public static final int INITIAL_HEALTH = 200;
+	public static final int INITIAL_X = 2*64 + 32;
+	public static final int INITIAL_Y = 5*64 + 32;
+
 	private int savedX;
 	private int savedY;
 	private int savedHealth;
 	private int savedMoney;
 	private int savedKills;
+	private String savedWeapon;
+	private String savedArmor;
 	private int savedMonsters;
 	private boolean savedDarkKnight;
+
 	private int kills;
 
 	@SuppressWarnings("deprecation")
@@ -71,11 +78,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		attackSound = sound.load(getContext(), R.raw.whip, 1);
 		actionSound = sound.load(getContext(), R.raw.clicker, 1);
 		SharedPreferences prefs = context.getSharedPreferences("savedstate", Context.MODE_PRIVATE);
-		this.savedX = prefs.getInt("X", 352);
-		this.savedY = prefs.getInt("Y", 352);
+		this.savedX = prefs.getInt("X", INITIAL_X);
+		this.savedY = prefs.getInt("Y", INITIAL_Y);
 		this.savedHealth = prefs.getInt("Health", INITIAL_HEALTH);
 		this.savedMoney = prefs.getInt("Money", 0);
 		this.savedKills = prefs.getInt("Kills", 0);
+		this.savedWeapon = prefs.getString("Weapon", "");
+		this.savedArmor = prefs.getString("Armor", "");
 		this.savedMonsters = prefs.getInt("Monsters", INITIAL_MONSTERS);
 		this.savedDarkKnight = prefs.getBoolean("DarkKnight", true);
 	}
@@ -117,6 +126,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			activity.finish();
 		}
 		player.addMoney(savedMoney);
+		player.receiveItem(weaponFromString(savedWeapon));
+		player.receiveItem(armorFromString(savedArmor));
 		entities.add(player);
 
 		npcs = new ArrayList<NPC>();
@@ -166,6 +177,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			entity.update();
 			if (entity.isDead()) {
 				iter.remove();
+				if (entity instanceof Enemy) 
+					enemies.remove(entity);
+				else if (entity instanceof NPC)
+					npcs.remove(entity);
 			}
 		}
 		map.update();
@@ -216,7 +231,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public void action() {
-		Log.d(TAG, "Action");
 		player.action();
 		sound.play(actionSound, 1, 1, 1, 0, 1);
 	}
@@ -305,6 +319,38 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 	public int getKills() {
 		return kills;
+	}
+
+	public String weaponToString(Weapon weapon) {
+		if (weapon == null) {
+			return "";
+		} else {
+			return weapon.getClass().getName();
+		}
+	}
+
+	public Weapon weaponFromString(String name) {
+		try {
+			return (Weapon) Class.forName(name).getConstructor(GameView.class).newInstance(this);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String armorToString(Armor armor) {
+		if (armor == null) {
+			return "";
+		} else {
+			return armor.getClass().getName();
+		}
+	}
+
+	public Armor armorFromString(String name) {
+		try {
+			return (Armor) Class.forName(name).getConstructor(GameView.class).newInstance(this);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

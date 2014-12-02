@@ -6,7 +6,7 @@ public class Goblin extends Enemy {
 	public Goblin(int x, int y, GameView game) {
 		super(x, y, game);
 
-		this.sprite = bmGetter.getBitmap(R.drawable.goblin);
+		this.setSprite(R.drawable.goblin);
 		this.speed = 4;
 		this.maxHealth = 10;
 		this.health = 10;

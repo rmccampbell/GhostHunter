@@ -13,7 +13,7 @@ public class Player extends Entity {
 	public Player(int x, int y, int health, GameView game) {
 		super(x, y, game);
 
-		this.sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
+		this.setSprite(R.drawable.no_armor_no_weapon);
 		this.setAnim(STANDING);
 
 		this.money = 0;
@@ -77,10 +77,10 @@ public class Player extends Entity {
 		int tsize = GameMap.TILESIZE;
 		Item item = game.getMapItems()[x / tsize][y / tsize];
 		game.getMapItems()[x / tsize][y / tsize] = null;
-		recieveItem(item);
+		receiveItem(item);
 	}
 
-	public void recieveItem(Item item) {
+	public void receiveItem(Item item) {
 		if (item instanceof Weapon) {
 			drop(this.weapon);
 			Weapon weapon = (Weapon) item;
@@ -151,36 +151,35 @@ public class Player extends Entity {
 	}
 
 	public void switchSprite() {
-//		sprite = null;
 		if (armor == null) {
 			if (weapon == null) {
-				sprite = bmGetter.getBitmap(R.drawable.no_armor_no_weapon);
+				setSprite(R.drawable.no_armor_no_weapon);
 			} else if (weapon instanceof ShortSword) {
-				sprite = bmGetter.getBitmap(R.drawable.no_armor_short_sword);
+				setSprite(R.drawable.no_armor_short_sword);
 			} else if (weapon instanceof LongSword) {
-				sprite = bmGetter.getBitmap(R.drawable.no_armor_longsword);
+				setSprite(R.drawable.no_armor_longsword);
 			} else if (weapon instanceof DragonSpear) {
-				sprite = bmGetter.getBitmap(R.drawable.no_armor_dragon_spear);
+				setSprite(R.drawable.no_armor_dragon_spear);
 			}
 		} else if (armor instanceof PlateArmor) {
 			if (weapon == null) {
-				sprite = bmGetter.getBitmap(R.drawable.armor_no_weapon);
+				setSprite(R.drawable.armor_no_weapon);
 			} else if (weapon instanceof ShortSword) {
-				sprite = bmGetter.getBitmap(R.drawable.armor_short_sword);
+				setSprite(R.drawable.armor_short_sword);
 			} else if (weapon instanceof LongSword) {
-				sprite = bmGetter.getBitmap(R.drawable.armor_longsword);
+				setSprite(R.drawable.armor_longsword);
 			} else if (weapon instanceof DragonSpear) {
-				sprite = bmGetter.getBitmap(R.drawable.armor_dragon_spear);
+				setSprite(R.drawable.armor_dragon_spear);
 			}
 		} else if (armor instanceof GoldArmor) {
 			if (weapon == null) {
-				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
+				setSprite(R.drawable.gold_armor_short_sword);
 			} else if (weapon instanceof ShortSword) {
-				sprite = bmGetter.getBitmap(R.drawable.gold_armor_short_sword);
+				setSprite(R.drawable.gold_armor_short_sword);
 			} else if (weapon instanceof LongSword) {
-				sprite = bmGetter.getBitmap(R.drawable.gold_armor_longsword);
+				setSprite(R.drawable.gold_armor_longsword);
 			} else if (weapon instanceof DragonSpear) {
-				sprite = bmGetter.getBitmap(R.drawable.gold_armor_dragon_spear);
+				setSprite(R.drawable.gold_armor_dragon_spear);
 			}
 		}
 	}
@@ -198,4 +197,13 @@ public class Player extends Entity {
 		money -= amount;
 		game.activity.displayMoney(money);
 	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public Armor getArmor() {
+		return armor;
+	}
+
 }

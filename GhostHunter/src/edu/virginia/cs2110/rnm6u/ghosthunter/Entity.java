@@ -105,7 +105,7 @@ public class Entity {
 		Rect src = new Rect(srcX, srcY, srcX + anim.width, srcY + anim.height);
 		Rect dst = new Rect(dstX, dstY, 
 				dstX + anim.width * SCALE, dstY + anim.height * SCALE);
-		c.drawBitmap(sprite, src, dst, null);
+		c.drawBitmap(getSprite(), src, dst, null);
 	}
 
 	public boolean hasCollision() {
@@ -259,12 +259,17 @@ public class Entity {
 		return height;
 	}
 
-	public Bitmap getSprite() {
+	public synchronized Bitmap getSprite() {
 		return sprite;
 	}
 
-	public void setSprite(Bitmap sprite) {
+	public synchronized void setSprite(Bitmap sprite) {
 		this.sprite = sprite;
+	}
+
+	public synchronized void setSprite(int id) {
+		this.sprite = null;
+		this.sprite = bmGetter.getBitmap(id);
 	}
 
 	public Animation getAnim() {

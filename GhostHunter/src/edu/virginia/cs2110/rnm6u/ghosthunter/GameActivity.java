@@ -144,13 +144,14 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	public void openPauseMenu() {
 		Intent intent = new Intent(this, PauseMenu.class);
-		intent.putExtra("X", game.getPlayer().getX());
-		intent.putExtra("Y", game.getPlayer().getY());
-		intent.putExtra("Health", game.getPlayer().getHealth());
-		intent.putExtra("Money", game.getPlayer().getMoney());
+		Player player = game.getPlayer();
+		intent.putExtra("X", player.getX());
+		intent.putExtra("Y", player.getY());
+		intent.putExtra("Health", player.getHealth());
+		intent.putExtra("Money", player.getMoney());
 		intent.putExtra("Kills", game.getKills());
-		intent.putExtra("Armor", "");
-		intent.putExtra("Weapon", "");
+		intent.putExtra("Weapon", game.weaponToString(player.getWeapon()));
+		intent.putExtra("Armor", game.armorToString(player.getArmor()));
 		int numMonsters = 0;
 		for (Enemy enemy : game.getEnemies()) {
 			if (!(enemy instanceof Boss)) {

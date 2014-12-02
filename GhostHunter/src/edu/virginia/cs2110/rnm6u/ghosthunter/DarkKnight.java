@@ -6,7 +6,7 @@ public class DarkKnight extends Boss {
 	public DarkKnight(int x, int y, GameView game) {
 		super(x, y, game);
 
-		this.sprite = bmGetter.getBitmap(R.drawable.dark_knight);
+		this.setSprite(R.drawable.dark_knight);
 		this.speed = 2;
 		this.maxHealth = 50;
 		this.health = 50;

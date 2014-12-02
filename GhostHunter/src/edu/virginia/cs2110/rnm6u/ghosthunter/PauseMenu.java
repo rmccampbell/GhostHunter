@@ -40,13 +40,13 @@ public class PauseMenu extends Activity {
 	}
 
 	public void saveAndQuit(View v) {
-		int x = getIntent().getIntExtra("X", 352);
-		int y = getIntent().getIntExtra("Y", 352);
+		int x = getIntent().getIntExtra("X", GameView.INITIAL_X);
+		int y = getIntent().getIntExtra("Y", GameView.INITIAL_Y);
 		int health = getIntent().getIntExtra("Health", GameView.INITIAL_HEALTH);
 		int money = getIntent().getIntExtra("Money", 0);
 		int kills = getIntent().getIntExtra("Kills", 0);
-		String armor = getIntent().getStringExtra("Armor");
 		String weapon = getIntent().getStringExtra("Weapon");
+		String armor = getIntent().getStringExtra("Armor");
 		int monsters = getIntent().getIntExtra("Monsters", GameView.INITIAL_MONSTERS);
 		boolean darkKnight = getIntent().getBooleanExtra("DarkKnight", true);
 		prefs.edit().putInt("X", x)
@@ -54,8 +54,8 @@ public class PauseMenu extends Activity {
 					.putInt("Health", health)
 					.putInt("Money", money)
 					.putInt("Kills", kills)
-					.putString("Armor", armor)
 					.putString("Weapon", weapon)
+					.putString("Armor", armor)
 					.putInt("Monsters", monsters)
 					.putBoolean("DarkKnight", darkKnight).commit();
 
@@ -66,13 +66,6 @@ public class PauseMenu extends Activity {
 
 	public void reset(View v) {
 		prefs.edit().clear().commit();
-//		prefs.edit().putInt("X", 352)
-//					.putInt("Y", 352)
-//					.putInt("Health", GameView.INITIAL_HEALTH)
-//					.putInt("Money", 0)
-//					.putInt("Kills", 0)
-//					.putInt("Monsters", GameView.INITIAL_MONSTERS)
-//					.putBoolean("DarkKnight", true).commit();
 		Intent intent = new Intent(this, MainMenu.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
