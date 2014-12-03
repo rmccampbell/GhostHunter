@@ -40,11 +40,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	private ArrayList<Entity> entities;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<NPC> npcs;
+	protected ArrayList<Arrow> arrows;
 	private Player player;
 	private DarkKnight darkKnight;
 	private Shopkeeper shopkeeper;
 	private Item[][] mapItems;
-
+	
 	public final BitmapGetter bmGetter;
 	public final SoundPool sound;
 	public final int attackSound;
@@ -116,10 +117,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		mapItems[3][4] = new ShortSword(this);
 		mapItems[14][38] = new LongSword(this);
 		mapItems[3][6] = new PlateArmor(this);
-		//mapItems[3][8] = new GoldArmor(this);
-		
+		mapItems[3][7] = new Bow(this);		
 
 		entities = new ArrayList<Entity>();
+		arrows = new ArrayList<Arrow>();
 		player = new Player(savedX, savedY, savedHealth, this);
 		if (player.isDead()) {
 			Log.e(TAG, "Player spawned with collision");
@@ -183,6 +184,14 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 					npcs.remove(entity);
 			}
 		}
+		
+		for(Arrow arrow : arrows) {
+			arrow.update();
+			if (!arrow.getIsAlive()) {
+				iter.remove();
+				arrows.remove(arrow);
+			}
+		}
 		map.update();
 	}
 
@@ -191,6 +200,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		map.draw(c);
 		for (Entity sprite : entities) {
 			sprite.draw(c);
+		}
+		for(Arrow arrow : arrows) {
+			arrow.draw(c);
 		}
 	}
 
@@ -351,6 +363,11 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public void addArrow(int x, int y, int direction) {
+		Arrow arrow = new Arrow(x, y, direction, this);
+		arrows.add(arrow);
 	}
 
 }

@@ -12,10 +12,8 @@ public class Player extends Entity {
 
 	public Player(int x, int y, int health, GameView game) {
 		super(x, y, game);
-
 		this.setSprite(R.drawable.no_armor_no_weapon);
 		this.setAnim(STANDING);
-
 		this.money = 0;
 		this.speed = 16;
 		this.maxHealth = GameView.INITIAL_HEALTH;
@@ -25,7 +23,6 @@ public class Player extends Entity {
 		this.armor = null;
 		this.attackDist = 0;
 		this.attackCooldown = 0;
-		
 		game.activity.displayHealth(health);
 		game.activity.displayMoney(money);
 	}
@@ -39,12 +36,17 @@ public class Player extends Entity {
 	public boolean attack() {
 		if (!super.attack()) return false;
 		if (weapon instanceof DragonSpear) {
-			playOnce(ATTACKING);
+			playOnce(ATTACKING_SPEAR);
 		}
-		Rect attRect = getAttackRect();
-		for (Enemy enemy : game.getEnemies()) {
-			if (attRect.intersect(enemy.getBoundingRect())) {
-				enemy.takeDamage(attack);
+		if (weapon instanceof Bow) {
+			playOnce(BOWDRAWING);
+			game.addArrow(this.x, this.y , this.direction);
+		} else {
+			Rect attRect = getAttackRect();
+			for (Enemy enemy : game.getEnemies()) {
+				if (attRect.intersect(enemy.getBoundingRect())) {
+					enemy.takeDamage(attack);
+				}
 			}
 		}
 		return true;
@@ -53,7 +55,7 @@ public class Player extends Entity {
 	@Override
 	public boolean canAttack() {
 		return super.canAttack() && weapon != null;
-	};
+	}
 
 	@Override
 	public void takeDamage(int damage) {

@@ -2,7 +2,7 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.Point;
 
 public class Arrow {
 
@@ -11,6 +11,7 @@ public class Arrow {
 	protected int direction;
 	protected int speed = 20;
 	protected int damage = 5;
+	protected boolean isAlive = true;
 	
 	public static final int UP = 0;
 	public static final int LEFT = 1;
@@ -25,16 +26,78 @@ public class Arrow {
 		this.y = y;
 		this.direction = direction;
 		this.game = game;
-		this.image = game.bmGetter.getBitmap(0);
+		
+		switch(direction) {
+		case UP:
+			this.image = game.bmGetter.getBitmap(R.drawable.arrow_up);
+			break;
+		case DOWN:
+			this.image = game.bmGetter.getBitmap(R.drawable.arrow_down);
+			break;
+		case RIGHT:
+			this.image = game.bmGetter.getBitmap(R.drawable.arrow_right);
+			break;
+		case LEFT:
+			this.image = game.bmGetter.getBitmap(R.drawable.arrow_left);
+			break;
+		default:
+			this.image = game.bmGetter.getBitmap(R.drawable.arrow_up);
+			break;
+		}
 	}
 	
 	public void update() {
-		x += speed;
-		y += speed;
+		
+		switch(direction) {
+		case UP:
+			y -= speed;
+			break;
+		case DOWN:
+			y += speed;
+			break;
+		case RIGHT:
+			x += speed;
+			break;
+		case LEFT:
+			x -= speed;
+			break;
+		default:
+			y += speed;
+			break;
+		}
+		
+		Enemy e = collidesEnemy();
+		if (e != null) {
+			e.takeDamage(damage);
+		}
+		if (collidesWall()) {
+			remove();
+		}
+		
 	}
 	
 	public void draw(Canvas c) {
-		c.drawBitmap(image, x + game.getMap().getxOffset(), y + game.getMap().getyOffset(), null);
+		c.drawBitmap(image, x + game.getMap().getxOffset()-32, y + game.getMap().getyOffset()-32, null);
+	}
+	
+	public Enemy collidesEnemy() {
+		for (Enemy e : game.getEnemies()) {
+			if (e.getBoundingRect().contains(x,y)) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
+	public boolean collidesWall() {
+		if (!game.getMap().getRect().contains(x,y)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void remove() {
+		isAlive = false;
 	}
 
 	public int getX() {
@@ -53,10 +116,32 @@ public class Arrow {
 		this.y = y;
 	}
 
-	
-	
+	public Bitmap getImage() {
+		return image;
+	}
 
+	public void setImage(Bitmap image) {
+		this.image = image;
+	}
 	
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
 	
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+	
+	public boolean getIsAlive() {
+		return this.isAlive;
+	}
 
 }
