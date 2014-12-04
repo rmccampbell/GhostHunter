@@ -2,14 +2,13 @@ package edu.virginia.cs2110.rnm6u.ghosthunter;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Point;
 
 public class Arrow {
 
 	protected int x;
 	protected int y;
 	protected int direction;
-	protected int speed = 20;
+	protected int speed = 48;
 	protected int damage = 5;
 	protected boolean isAlive = true;
 	
@@ -40,9 +39,6 @@ public class Arrow {
 		case LEFT:
 			this.image = game.bmGetter.getBitmap(R.drawable.arrow_left);
 			break;
-		default:
-			this.image = game.bmGetter.getBitmap(R.drawable.arrow_up);
-			break;
 		}
 	}
 	
@@ -61,14 +57,12 @@ public class Arrow {
 		case LEFT:
 			x -= speed;
 			break;
-		default:
-			y += speed;
-			break;
 		}
 		
 		Enemy e = collidesEnemy();
 		if (e != null) {
 			e.takeDamage(damage);
+			remove();
 		}
 		if (collidesWall()) {
 			remove();
@@ -140,7 +134,7 @@ public class Arrow {
 		this.damage = damage;
 	}
 	
-	public boolean getIsAlive() {
+	public boolean isAlive() {
 		return this.isAlive;
 	}
 

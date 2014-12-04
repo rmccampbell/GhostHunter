@@ -171,7 +171,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	}
 
 	public void displayHealth(final int health) {
-		Log.d(TAG, "Health: " + health);
+//		Log.d(TAG, "Health: " + health);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -182,7 +182,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	}
 
 	public void displayMoney(final int money) {
-		Log.d(TAG, "Money: " + money);
+//		Log.d(TAG, "Money: " + money);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -193,7 +193,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	}
 
 	public void displayKills(final int kills) {
-		Log.d(TAG, "Kills: " + kills);
+//		Log.d(TAG, "Kills: " + kills);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

@@ -41,17 +41,17 @@ public class MainMenu extends Activity {
 			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
 			musicButton.setText("Music On");
 		}
-		else if (!(prefs.getBoolean("Music", true))) {
+		else {
 			musicButton.setTextColor(Color.argb(255, 100, 100, 100));
 			musicButton.setText("Music Off");
 		}
 		
 		difficultyButton = (Button) findViewById(R.id.difficulty_button);
-		if (prefs.getBoolean("Difficulty", true)) {
+		if (prefs.getBoolean("Difficulty", false)) {
 			difficultyButton.setTextColor(Color.argb(255, 255, 255, 255));
 			difficultyButton.setText("Hard");
 		}
-		else if (!(prefs.getBoolean("Difficulty", true))) {
+		else {
 			difficultyButton.setTextColor(Color.argb(255, 100, 100, 100));
 			difficultyButton.setText("Easy");
 		}
@@ -75,7 +75,7 @@ public class MainMenu extends Activity {
 			musicButton.setText("Music Off");
 			prefs.edit().putBoolean("Music", false).commit();
 		}
-		else if (!(prefs.getBoolean("Music", true))) {
+		else {
 			musicButton.setTextColor(Color.argb(255, 255, 255, 255));
 			musicButton.setText("Music On");
 			prefs.edit().putBoolean("Music", true).commit();
@@ -83,13 +83,14 @@ public class MainMenu extends Activity {
 	}
 	
 	public void difficultyButtonPressed(View view) {
-		if (prefs.getBoolean("Difficulty", true)) {
+		soundPool.play(clickerSound, 1, 1, 1, 0, 1);
+		if (prefs.getBoolean("Difficulty", false)) {
 			difficultyButton.setTextColor(Color.argb(255, 100, 100, 100));
 			difficultyButton.setText("Easy");
 			prefs.edit().putBoolean("Difficulty", false).commit();
 		}
 		
-		else if (!(prefs.getBoolean("Difficulty", true))) {
+		else {
 			difficultyButton.setTextColor(Color.argb(255, 255, 255, 255));
 			difficultyButton.setText("Hard");
 			prefs.edit().putBoolean("Difficulty", true).commit();
@@ -103,12 +104,12 @@ public class MainMenu extends Activity {
 				Toast.LENGTH_SHORT);
 		toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 		toast.show();
-		Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				toast.cancel();
-			}
-		}, 750);
+//		Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//			@Override
+//			public void run() {
+//				toast.cancel();
+//			}
+//		}, 750);
 	}
 }

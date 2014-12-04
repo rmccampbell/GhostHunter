@@ -35,13 +35,13 @@ public class Player extends Entity {
 	@Override
 	public boolean attack() {
 		if (!super.attack()) return false;
-		if (weapon instanceof DragonSpear) {
-			playOnce(ATTACKING_SPEAR);
-		}
 		if (weapon instanceof Bow) {
 			playOnce(BOWDRAWING);
 			game.addArrow(this.x, this.y , this.direction);
 		} else {
+			if (weapon instanceof DragonSpear) {
+				playOnce(ATTACKING_SPEAR);
+			}
 			Rect attRect = getAttackRect();
 			for (Enemy enemy : game.getEnemies()) {
 				if (attRect.intersect(enemy.getBoundingRect())) {

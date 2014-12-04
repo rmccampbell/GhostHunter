@@ -185,11 +185,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			}
 		}
 		
-		for(Arrow arrow : arrows) {
+		Iterator<Arrow> arrowIt = arrows.iterator();
+		while (arrowIt.hasNext()) {
+			Arrow arrow = arrowIt.next();
 			arrow.update();
-			if (!arrow.getIsAlive()) {
-				iter.remove();
-				arrows.remove(arrow);
+			if (!arrow.isAlive()) {
+				arrowIt.remove();
 			}
 		}
 		map.update();
