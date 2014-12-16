@@ -27,7 +27,6 @@ public class Entity {
 	private static final int SCALE = 2;
 
 	protected GameView game;
-	protected BitmapGetter bmGetter;
 
 	protected int x, y;
 	protected int xSpeed = 0, ySpeed = 0;
@@ -56,7 +55,6 @@ public class Entity {
 
 	public Entity(int x, int y, GameView game) {
 		this.game = game;
-		this.bmGetter = game.bmGetter;
 		this.x = x;
 		this.y = y;
 
@@ -269,7 +267,7 @@ public class Entity {
 
 	public synchronized void setSprite(int id) {
 		this.sprite = null;
-		this.sprite = bmGetter.getBitmap(id);
+		this.sprite = game.bmGetter.getBitmap(id);
 	}
 
 	public Animation getAnim() {

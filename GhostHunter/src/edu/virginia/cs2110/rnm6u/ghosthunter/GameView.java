@@ -1,6 +1,5 @@
 package edu.virginia.cs2110.rnm6u.ghosthunter;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +14,6 @@ import android.media.SoundPool;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 	
@@ -335,34 +333,40 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 	}
 
 	public String weaponToString(Weapon weapon) {
-		if (weapon == null) {
+		if (weapon == null)
 			return "";
-		} else {
-			return weapon.getClass().getName();
-		}
+		return weapon.getClass().getName();
 	}
 
 	public Weapon weaponFromString(String name) {
+		if (name.equals("")) return null;
 		try {
-			return (Weapon) Class.forName(name).getConstructor(GameView.class).newInstance(this);
-		} catch (Exception e) {
+			Class<? extends Weapon> clazz = Class.forName(name).asSubclass(Weapon.class);
+			return clazz.getConstructor(GameView.class).newInstance(this);
+		} catch(ClassNotFoundException e) {
+			Log.e(TAG, "Weapon class not found", e);
 			return null;
+		} catch(ReflectiveOperationException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
 	public String armorToString(Armor armor) {
-		if (armor == null) {
+		if (armor == null)
 			return "";
-		} else {
-			return armor.getClass().getName();
-		}
+		return armor.getClass().getName();
 	}
 
 	public Armor armorFromString(String name) {
+		if (name.equals("")) return null;
 		try {
-			return (Armor) Class.forName(name).getConstructor(GameView.class).newInstance(this);
-		} catch (Exception e) {
+			Class<? extends Armor> clazz = Class.forName(name).asSubclass(Armor.class);
+			return clazz.getConstructor(GameView.class).newInstance(this);
+		} catch(ClassNotFoundException e) {
+			Log.e(TAG, "Armor class not found", e);
 			return null;
+		} catch(ReflectiveOperationException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
