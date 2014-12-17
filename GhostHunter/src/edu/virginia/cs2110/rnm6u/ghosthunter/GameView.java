@@ -344,10 +344,14 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			Class<? extends Weapon> clazz = Class.forName(name).asSubclass(Weapon.class);
 			return clazz.getConstructor(GameView.class).newInstance(this);
 		} catch(ClassNotFoundException e) {
-			Log.e(TAG, "Weapon class not found", e);
+			Log.e(TAG, "Weapon class not found: " + name, e);
 			return null;
-		} catch(ReflectiveOperationException e) {
-			throw new RuntimeException(e);
+		} catch (ClassCastException e) {
+			Log.e(TAG,  "Class not subclass of Weapon: " + name, e);
+			return null;
+		} catch(Exception e) {
+			Log.e(TAG,  "Error loading weapon class: " + name, e);
+			return null;
 		}
 	}
 
@@ -363,13 +367,17 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 			Class<? extends Armor> clazz = Class.forName(name).asSubclass(Armor.class);
 			return clazz.getConstructor(GameView.class).newInstance(this);
 		} catch(ClassNotFoundException e) {
-			Log.e(TAG, "Armor class not found", e);
+			Log.e(TAG, "Armor class not found: " + name, e);
 			return null;
-		} catch(ReflectiveOperationException e) {
-			throw new RuntimeException(e);
+		} catch (ClassCastException e) {
+			Log.e(TAG,  "Class not subclass of Armor: " + name, e);
+			return null;
+		} catch(Exception e) {
+			Log.e(TAG,  "Error loading armor class: " + name, e);
+			return null;
 		}
 	}
-	
+
 	public void addArrow(int x, int y, int direction) {
 		Arrow arrow = new Arrow(x, y, direction, this);
 		arrows.add(arrow);

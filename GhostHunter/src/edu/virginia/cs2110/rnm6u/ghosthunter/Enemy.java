@@ -22,7 +22,7 @@ public class Enemy extends Entity {
 		this.attackCooldown = 8;
 
 		this.prefs = game.activity.giveMePrefs();
-		this.difficulty = prefs.getBoolean("Difficulty", true);
+		this.difficulty = prefs.getBoolean("Difficulty", false);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Enemy extends Entity {
 			changeDirRandom();
 		}
 		if (difficulty && canFollow()) {
-				changeDirFollow();
+			changeDirFollow();
 		}
 		else if (rand.nextFloat() < .05) {
 			changeDirRandom();
@@ -110,7 +110,7 @@ public class Enemy extends Entity {
 			}
 		}
 		
-		if(this.distanceFromPlayer('x') > this.distanceFromPlayer('y')) {
+		else {
 			if (this.x > game.getPlayer().getX()) {
 				this.direction = LEFT;
 			}
